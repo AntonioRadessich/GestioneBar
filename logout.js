@@ -1,5 +1,12 @@
-function print(message){
-	window.alert(message);
-}
+
+
+
+
+
+
+
 
 asd
+=======
+>>>>>>> 1ae9216980496ac8842a32f29d1bf728c1f08fc6
+>>>>>>> 95009898c87f8a78218dde6b0714abd6e58aef7d
