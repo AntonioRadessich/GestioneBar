@@ -4,11 +4,11 @@
     </head>
     <body>
         <h1>Login</h1>
-        <form action="api/v1" method="post" name="loginform" id="loginform">
+        <form method="post" name="loginform" id="loginform" onsubmit="login()">
             <span>Login:</span>
             <span id="loggedUser"></span>
             <input name="email" id="loginEmail"/>
-            <button type="button" onclick="login()">Login</button>
+            <input type="submit" value="Login">
         </form>
         <script src="script.js"></script> 
     </body>

@@ -1,9 +1,9 @@
 function login()
 {
     //get the form object
+    console.log("Stampa");
     var email = document.getElementById("loginEmail").value;
     //console.log(email);
-
     fetch('../api/v1?email=' + email)
     .then((resp) => resp.json()) // Transform the data into json
     .then(function(data) { // Here you get the data to modify as you please
