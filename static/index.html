@@ -1,16 +1,21 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <link rel="stylesheet" type="text/css" href="styles/index.css">
     </head>
     <body>
-        <h1>Login</h1>
-        <form action="api/v1" method="post" name="loginform" id="loginform">
-            <span>Login:</span>
-            <span id="loggedUser"></span>
-            <input name="email" id="loginEmail"/>
-            <button type="button" onclick="login()">Login</button>
-        </form>
-        <script src="script.js"></script> 
+        <div id="rcorners">
+            <form action="api/v1" style="margin-right: 0%;" method="post" name="loginform" >
+                <h1 id="welcomeText">Benvenuto!</h1>
+                <br>
+                <div id="loggedUser">
+                <img id="emailIcon" src="https://icon-library.com/images/username-icon-png/username-icon-png-19.jpg">
+                <input placeholder="Email" id="loginEmail"/>
+                </div>
+                <br><br>
+                <button id="rcorners2" type="button" onclick="login()"><b>Login</b></button>
+            </form>
+            <script src="script.js"></script> 
+        </div>
     </body>
-
 </html>

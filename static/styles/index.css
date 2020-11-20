@@ -1,0 +1,44 @@
+#rcorners {
+    border-radius: 15px;
+    background:white;
+    margin-left: 30%;
+    margin-top: 100px;
+    width: 350px;
+    height: 350px;  
+    padding-left: 100px;
+    padding-right: 100px;
+}
+#rcorners2 {
+    border: none;
+    border-radius: 30px;
+    background-image: url('https://st4.depositphotos.com/3271841/27836/v/600/depositphotos_278363316-stock-video-multicolored-motion-gradient-background-pastel.jpg');
+    margin: 0;
+    width: 350px;
+    height: 50px;
+    color:white;
+    font-size: 25px;
+
+}
+body {
+    background-image: url('https://www.teahub.io/photos/full/43-436329_blue-purple-gradient-purple-blue-and-green.jpg');
+}
+#loginEmail{
+    font-family:verdana; 
+    height:30px; 
+    width: 250px; 
+    font-size: 18px; 
+    border: none; 
+    border-bottom: 2px solid gray;
+}
+#emailIcon{
+    width: 30px; 
+    height: 30px; 
+    vertical-align: middle;
+}
+#welcomeText{
+    color:rgb(51, 51, 51); 
+    text-align: center; 
+    font-size: 40px; 
+    font-family:verdana; 
+    padding-top: 50px;
+}
