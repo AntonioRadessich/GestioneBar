@@ -1,0 +1,75 @@
+openapi: 3.0.0
+info:
+  version: '1.0'
+  title: "Gestione Bar"
+  description: Gestine Bar è un software per facilitare la gestione di una birreria.
+  license:
+    name: MIT
+servers:
+  - url: http://localhost:8000/api/v1
+    description: Localhost
+paths:
+  /manager:
+    get:
+      description: >-
+        Gets the list of managers.
+      summary: Shows the list of managers.
+      responses:
+        '200':
+          description: 'Collection of manager'
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Users'
+  /manager/update:
+    post:
+      description: >-
+        Creates a new user.
+      summary: Adds a new user.
+      responses:
+        '201':
+          description: 'User created. Link in the Location header'
+          headers:
+            'Location':
+              schema:
+                type: string
+              description: Link to the newly created user.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Users'
+  /manager/getUsers:
+    get:
+      description: >-
+        Gets the list all users.
+      summary: Shows the list all users.
+      responses:
+        '200':
+          description: 'Collection of users'
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Users'
+components:
+  schemas:
+    Users:
+      type: object
+      required:
+        - id
+        - email
+        - category
+      properties:
+        id:
+          type: integer
+          description: 'ID of the user'
+        email:
+          type: string
+          description: 'Email address of the user'
+        category:
+          type: string
+          description: 'Category of the user'
