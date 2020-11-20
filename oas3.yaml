@@ -13,7 +13,7 @@ paths:
     get:
       description: >-
         Gets the list of managers.
-      summary: Shows the list of managers.
+      summary: Shows the list of all managers.
       responses:
         '200':
           description: 'Collection of manager'
@@ -23,11 +23,13 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/Users'
-  /manager/update:
+        "400":
+          description: "Invalid status value"
+  /manager/users:
     post:
       description: >-
-        Creates a new user.
-      summary: Adds a new user.
+          Creates an new user.
+      summary: Adds an new user.
       responses:
         '201':
           description: 'User created. Link in the Location header'
@@ -36,12 +38,13 @@ paths:
               schema:
                 type: string
               description: Link to the newly created user.
+        "405":
+            description: "Invalid input"
       requestBody:
         content:
           application/json:
             schema:
               $ref: '#/components/schemas/Users'
-  /manager/getUsers:
     get:
       description: >-
         Gets the list all users.
@@ -55,6 +58,52 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/Users'
+  /manager/users/{userId}:
+    get:
+        description: >-
+          Gets a user.
+        summary: Shows a user by his id.
+        responses:
+          '200':
+            description: 'Collection of users'
+            content:
+              application/json:
+                schema:
+                  type: array
+                  items:
+                    $ref: '#/components/schemas/Users'
+    put:
+      description: >-
+        Update an user.
+      summary: Updates an user by his id.
+      responses:
+        '201':
+          description: 'User created. Link in the Location header'
+          headers:
+            'Location':
+              schema:
+                type: string
+              description: Link to the newly created user.
+        "400":
+            description: "Invalid ID supplied"
+        "404":
+          description: "User not found"
+        "405":
+          description: "Validation exception"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Users'
+    delete:
+      description: >-
+        Delete an user by his id
+      summary: Deletes an user.
+      responses:
+        "400":
+          description: "Invalid ID supplied"
+        "404":
+          description: "User not found"
 components:
   schemas:
     Users:
