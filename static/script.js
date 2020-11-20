@@ -15,13 +15,23 @@ function login()
     return false;
 };
 
+function getUserEmail(){
+    var logged=document.cookie
+    .split("; ")
+    .find(row=>row.startsWith("loggedUser"))
+    .split(":")[1];
+    return logged;
+}
+
 function getUser(){
     var logged=document.cookie
     .split("; ")
     .find(row=>row.startsWith("loggedUser"))
     .split(":")[1];
-    document.getElementById("btn").innerHTML=logged;
+    logged=logged.split("@")[0];
+    return logged;
 }
+
 function logout(){
     document.cookie="loggedUser:";
     window.location.href="http://localhost:8000/";
