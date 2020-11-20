@@ -9,6 +9,22 @@ servers:
   - url: http://localhost:8000/api/v1
     description: Localhost
 paths:
+  /:
+    get:
+      description: >-
+        Checks the user's credentials and attempt login.
+      summary: Attempts login.
+      responses:
+        '200':
+          description: 'User logged in'
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Users'
+        '404':
+          description: 'User not found'
   /manager:
     get:
       description: >-
@@ -88,8 +104,6 @@ paths:
             description: "Invalid ID supplied"
         "404":
           description: "User not found"
-        "405":
-          description: "Validation exception"
       requestBody:
         content:
           application/json:
