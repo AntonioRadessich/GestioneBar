@@ -3,6 +3,7 @@
     <head>
         <title>Manager</title>
         <script src="script.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
         <script>
             document.addEventListener("DOMContentLoaded", function(){
 
@@ -11,10 +12,71 @@
                 }
                 setTimeout(setName,10);
             });
+
+            $( document ).ready( function() {
+                getListUsers();
+            });
+            
+            function getListUsers(){
+                $.getJSON("api/v1/manager/users",function(data){
+                    //estrae gli header del json
+                    var col=[];
+                    for(var i=0;i<data.length;i++){
+                        for(var j in data[i]){
+                            if(col.indexOf(j)===-1){
+                                col.push(j);
+                            }
+                        }
+                    }
+
+                    var table=document.createElement("table");
+                    table.setAttribute("id","workersTable");
+                    //setta gli header nella tabella
+                    var tr=table.insertRow(-1);
+                    for(var i=0;i<col.length;i++){
+                        var th=document.createElement("th");
+                        th.innerHTML=col[i];
+                        tr.appendChild(th);
+                    }
+
+                    //scive i dati nella tabella
+                    for(var i=0;i<data.length;i++){
+                        tr=table.insertRow(-1);
+                        for(var j=0;j<col.length;j++){
+                            var cell=tr.insertCell(-1);
+                            cell.innerHTML=data[i][col[j]];
+                        }
+                        var cell=tr.insertCell(-1);
+                        cell.innerHTML="<button type='button' id='delete"+(i+1)+"' onclick='deleteUser(this.id)'>Delete</button>";
+                    }
+
+                    var divContainer=document.getElementById('workersList');
+                    divContainer.innerHTML="";
+                    divContainer.appendChild(table);
+                });
+            }
+
+            function deleteUser(id){
+                id=id.substr(6);
+                id=document.getElementById('workersTable').rows[id].cells[0].innerHTML;
+                id=id.split("/");
+                id=id[id.length-1];
+
+                $.ajax({
+                    url: 'api/v1/manager/users/'+id,
+                    type: 'DELETE',
+                    success: function(result){
+                        getListUsers();
+                    }
+                });
+            }
         </script>
     </head>
     <body>
         <h4 id="welcome"></h4>
+        <div id="mainBody">
+            <div id="workersList"></div>
+        </div>
         <button type="button" onclick="logout()">Log out</button>
     </body>
 </html>
