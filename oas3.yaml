@@ -2,7 +2,7 @@ openapi: 3.0.0
 info:
   version: '1.0'
   title: "Gestione Bar"
-  description: Gestine Bar è un software per facilitare la gestione di una birreria.
+  description: Gestione Bar è un software per facilitare la gestione di una birreria.
   license:
     name: MIT
 servers:
@@ -53,7 +53,7 @@ paths:
             'Location':
               schema:
                 type: string
-              description: Link to the newly created user.
+                description: Link to the newly created user.
         "405":
             description: "Invalid input"
       requestBody:
@@ -78,7 +78,7 @@ paths:
     get:
         description: >-
           Gets a user.
-        summary: Shows a user by his id.
+        summary: Shows an user by his id.
         responses:
           '200':
             description: 'Collection of users'
@@ -118,6 +118,72 @@ paths:
           description: "Invalid ID supplied"
         "404":
           description: "User not found"
+  /birre:
+    get:
+      description: >-
+        Gets the list all beers.
+      summary: Shows the list of all beers.
+      responses:
+        '200':
+          description: 'Collection of beers'
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Beers'
+    post:
+      description: >-
+          Creates a new beer to the database.
+      summary: Adds a new beer.
+      responses:
+        '201':
+          description: 'Beer has been created; link in the Location header'
+          headers:
+            'Location':
+              schema:
+                type: string
+              description: Link to the newly created beer.
+        "405":
+            description: "Invalid input"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Beers'
+    put:
+      description: >-
+        Updates an already existing beer.
+      summary: Updates a beer's information.
+      responses:
+        '201':
+          description: 'Beer has been successfully updated.'
+        '404':
+          description: 'Beer to update not found.'
+  /birre/{beerID}:
+    get:
+      description: >-
+        Gets a beer's information.
+      summary: Shows a beer by its id.
+      responses:
+        '200':
+          description: 'Collection of beers'
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Beers'
+    delete:
+      description: >-
+        Deletes a beer.
+      summary: Deletes a beer by its id.
+      responses:
+        '200':
+          description: 'Beer has been successfully deleted.'
+        '404':
+          description: 'Beer to delete not found.'
+
 components:
   schemas:
     Users:
@@ -136,3 +202,15 @@ components:
         category:
           type: string
           description: 'Category of the user'
+    Beers:
+      type: object
+      required:
+        - id
+        - name
+      properties:
+        id:
+          type: integer
+          description: 'ID of the beer'
+        name:
+          type: string
+          description: 'Name of the beer'
