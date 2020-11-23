@@ -4,7 +4,6 @@ function login()
 {
     //get the form object
     var email = document.getElementById("loginEmail").value;
-    //console.log(email);
 
     fetch('../api/v1?email=' + email)
     .then((resp) => resp.json()) // Transform the data into json
