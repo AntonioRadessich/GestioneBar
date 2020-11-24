@@ -7,13 +7,15 @@
     "lib": "lib"
   },
   "dependencies": {
-    "express": "^4.17.1",
-    "jest": "^26.6.3",
+    "body-parser": "*",
+    "express": "*",
     "mongodb": "^3.6.3",
-    "mongoose": "^5.10.14",
+    "mongoose": "^5.10.15",
     "node-fetch": "^2.6.1"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "jest": "^26.6.3"
+  },
   "scripts": {
     "start": "node api.js",
     "test": "jest"

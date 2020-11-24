@@ -2,8 +2,8 @@ function login()
 {
     //get the form object
     var email = document.getElementById("loginEmail").value;
-    //console.log(email);
-    fetch('../api/v1/?email=' + email)
+
+    fetch('../api/v1?email=' + email)
     .then((resp) => resp.json()) // Transform the data into json
     .then(function(data) { // Here you get the data to modify as you please
         document.cookie='loggedUser:'+data[0].email;
