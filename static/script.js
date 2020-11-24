@@ -8,7 +8,7 @@ function login()
     .then(function(data) { // Here you get the data to modify as you please
         document.cookie='loggedUser:'+data[0].email;
         var category=data[0].category;
-        window.location.replace("http://localhost:8000/"+category+".html",true);
+        window.location.replace("/"+category+".html",true);
         return false;
     })
     .catch( error => console.error(error) ); // If there is any error you will catch them here
