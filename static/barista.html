@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Barista</title>
+        <script src="script.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script>
+            document.addEventListener("DOMContentLoaded", function(){
+
+                function setName(){
+                    document.getElementById("welcome").innerHTML="Ciao, "+getUser()+"!";
+                }
+                setTimeout(setName,10);
+            });
+
+            $( document ).ready( function() {
+                //document.getElementsByClassName('toHide').style.display="none";
+                $(".toHide").hide();
+                getBeersList();
+            });
+
+            function getBeersList(){
+                $.getJSON("api/v1/birre",function(data){
+                    var col=[];
+                    for(var i=0;i<data.length;i++){
+                        for(var j in data[i]){
+                            if(col.indexOf(j)===-1){
+                                col.push(j);
+                            }
+                        }
+                    }
+                    var table=document.createElement("table");
+                    table.setAttribute("id","beersTab");
+                    //setta gli header nella tabella
+                    var tr=table.insertRow(-1);
+                    for(var i=0;i<col.length;i++){
+                        var th=document.createElement("th");
+                        th.innerHTML=col[i];
+                        tr.appendChild(th);
+                    }
+
+                    //scive i dati nella tabella
+                    for(var i=0;i<data.length;i++){
+                        tr=table.insertRow(-1);
+                        for(var j=0;j<col.length;j++){
+                            var cell=tr.insertCell(-1);
+                            cell.innerHTML=data[i][col[j]];
+                        }
+                        var cell2=tr.insertCell(-1);
+                        cell2.innerHTML="<button type='button' id='modify"+(i+1)+"' onclick='editBeer(this.id)'>Modify</button>";
+                        var cell=tr.insertCell(-1);
+                        cell.innerHTML="<button type='button' id='delete"+(i+1)+"' onclick='deleteBeer(this.id)'>Delete</button>";
+                    }
+                var divContainer=document.getElementById('beersList');
+                divContainer.innerHTML="";
+                divContainer.appendChild(table);
+                });
+            }
+
+            function deleteBeer(id){
+                id=id.substr(6);
+                id=document.getElementById('beersTab').rows[id].cells[0].innerHTML;
+                id=id.split("/");
+                id=id[id.length-1];
+
+                $.ajax({
+                    url: 'api/v1/birre/'+id,
+                    type: 'DELETE',
+                    success: function(result){
+                        getBeersList();
+                    }
+                });
+            }
+
+            function addNewBeer(){
+                if(document.getElementById('newBeerName')==""){
+                   return false; 
+                }
+                
+                var newBeer={
+                    "name": ""+document.getElementById('newBeerName').value,
+                };
+
+                $.ajax({
+                   url: 'api/v1/birre',
+                   type: 'POST',
+                   data: JSON.stringify(newBeer),
+                   contentType: "application/json; charset=utf-8",
+                   success: function(result){
+                       getBeersList();
+                   }
+                });
+                document.getElementById('newBeerName').value="";
+                return false;
+            }
+
+            function editBeer(id){
+                $(".toHide").show();
+                id=id.substr(6);
+                var name=document.getElementById('beersTab').rows[id].cells[1].innerHTML;
+
+                id=document.getElementById('beersTab').rows[id].cells[0].innerHTML;
+                id=id.split("/");
+                id=id[id.length-1];
+
+                document.getElementById("beerID").innerHTML=id;
+                document.getElementById("modifyBeer").value=name;
+            }
+
+            function sendEditedBeer(){
+                if(document.getElementById('modifyBeer')==""){
+                   return false; 
+                }
+
+                var newBeer={
+                    "id": parseInt(document.getElementById('beerID').innerHTML),
+                    "name": ""+document.getElementById('modifyBeer').value,
+                };
+
+                $.ajax({
+                   url: 'api/v1/birre/',
+                   type: 'PUT',
+                   data: JSON.stringify(newBeer),
+                   contentType: "application/json; charset=utf-8",
+                   success: function(result){
+                       getBeersList();
+                   }
+                });
+                document.getElementById('modifyBeer').value="";
+
+                $(".toHide").hide();
+                return false;
+            }
+
+        </script>
+    </head>
+    <body>
+        <h4 id="welcome"></h4>
+        <div id="mainBody">
+            <div id="beersList"></div>
+        </div>
+
+        <br class="toHide"><br class="toHide">
+        <div class="toHide">
+            <form id="modifyForm" onsubmit="sendEditedBeer(); return false;">
+                <span id="beerID"></span>
+                <input type="text" id='modifyBeer'>
+                <input type="submit" value="Modifica Birra">
+            </form>
+        </div>
+        
+        <br><br>
+        <div id="insertDiv">
+            <form id="insertForm" onsubmit="addNewBeer(); return false;">
+                <input type="text" id='newBeerName'>
+                <input type="submit" value="Aggiungi Birra">
+            </form>
+        </div>
+        <button type="button" onclick="logout()">Log out</button>
+    </body>
+</html>
