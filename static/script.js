@@ -34,5 +34,5 @@ function getUser(){
 
 function logout(){
     document.cookie="loggedUser:";
-    window.location.href="http://localhost:8000/";
+    window.location.href="../index.html";
 }
