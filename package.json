@@ -1,0 +1,36 @@
+{
+  "name": "gestionebar",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "directories": {
+    "lib": "lib"
+  },
+  "dependencies": {
+    "express": "^4.17.1",
+    "jest": "^26.6.3",
+    "mongodb": "^3.6.3",
+    "mongoose": "^5.10.14",
+    "node-fetch": "^2.6.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "start": "node api.js",
+    "test": "jest"
+  },
+  "jest": {
+    "verbose": true,
+    "collectCoverage": true,
+    "testEnvironment": "node"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AntonioRadessich/GestioneBar.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/AntonioRadessich/GestioneBar/issues"
+  },
+  "homepage": "https://github.com/AntonioRadessich/GestioneBar#readme"
+}
