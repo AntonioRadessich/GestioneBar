@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Cameriere</title>
+        <script src="script.js"></script>
+        <script>
+            document.addEventListener("DOMContentLoaded", function(){
+
+                function setName(){
+                    document.getElementById("welcome").innerHTML="Ciao, "+getUser()+"!";
+                }
+                setTimeout(setName,10);
+            });
+        </script>
+    </head>
+    <body>
+        <h4 id="welcome"></h4>
+        <button type="button" onclick="logout()">Log out</button>
+    </body>
+</html>
