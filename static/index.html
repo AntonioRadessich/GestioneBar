@@ -5,7 +5,7 @@
     </head>
     <body>
         <div id="rcorners">
-            <form action="api/v1" style="margin-right: 0%;" method="post" name="loginform" >
+            <form action="api/v1" style="margin-right: 0%;" method="post" name="loginform" onsubmit="login(); return false;">
                 <h1 id="welcomeText">Benvenuto!</h1>
                 <br>
                 <div id="loggedUser">
@@ -13,7 +13,7 @@
                 <input placeholder="Email" id="loginEmail"/>
                 </div>
                 <br><br>
-                <button id="rcorners2" type="button" onclick="login()"><b>Login</b></button>
+                <input id="rcorners2" type="submit" value="Login">
             </form>
             <script src="script.js"></script> 
         </div>
