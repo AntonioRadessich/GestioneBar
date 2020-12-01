@@ -20,7 +20,7 @@
             });
 
             function getBeersList(){
-                $.getJSON("api/v1/birre",function(data){
+                $.getJSON("api/v1/birre?token="+JSON.parse(localStorage.getItem("loggedUser")).token,function(data){
                     var col=[];
                     for(var i=0;i<data.length;i++){
                         for(var j in data[i]){
@@ -66,6 +66,10 @@
                 $.ajax({
                     url: 'api/v1/birre/'+id,
                     type: 'DELETE',
+                    headers: {
+                        'Content-Type':'application/json',
+                        'x-access-token':JSON.parse(localStorage.getItem("loggedUser")).token
+                    },
                     success: function(result){
                         getBeersList();
                     }
@@ -85,7 +89,10 @@
                    url: 'api/v1/birre',
                    type: 'POST',
                    data: JSON.stringify(newBeer),
-                   contentType: "application/json; charset=utf-8",
+                   headers: {
+                       "Content-Type":"application/json",
+                       "x-access-token":JSON.parse(localStorage.getItem("loggedUser")).token
+                   },
                    success: function(result){
                        getBeersList();
                    }
@@ -121,7 +128,10 @@
                    url: 'api/v1/birre/',
                    type: 'PUT',
                    data: JSON.stringify(newBeer),
-                   contentType: "application/json; charset=utf-8",
+                   headers: {
+                       "Content-Type":"application/json",
+                       "x-access-token":JSON.parse(localStorage.getItem("loggedUser")).token
+                   },
                    success: function(result){
                        getBeersList();
                    }
