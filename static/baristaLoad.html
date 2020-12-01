@@ -1,0 +1,35 @@
+<div class="modifyBeer">
+    <div id="mainBody">
+        <div id="beersList"></div>
+    </div>
+
+    <br class="toHide"><br class="toHide">
+    <div class="toHide">
+        <form id="modifyForm" onsubmit="sendEditedBeer(); return false;">
+            <span id="beerID"></span>
+            <input type="text" id='modifyBeer'>
+            <input type="submit" value="Modifica Birra">
+        </form>
+    </div>
+    <br><br>
+    <div id="insertDiv">
+        <form id="insertForm" onsubmit="addNewBeer(); return false;">
+            <input type="text" id='newBeerName'>
+            <input type="submit" value="Aggiungi Birra">
+        </form>
+    </div>
+    <button type="button" onclick="logout()">Log out</button>
+</div>
+
+<div class="searchBeerByName">
+    <div id="beerInfo">
+        <p id="beerInfoName"></p>
+        <img id="beerInfoImg">
+    </div>
+    <div id="insertDiv">
+        <form id="insertForm" onsubmit="searchBeer(); return false;">
+            <input type="text" id='beerName'>
+            <input type="submit" value="Cerca Birra">
+        </form>
+    </div>
+</div>
