@@ -183,6 +183,22 @@ paths:
           description: 'Beer has been successfully deleted.'
         '404':
           description: 'Beer to delete not found.'
+  /birre/nome/{nome}:
+    get:
+      description: >-
+        Gets a beer's information.
+      summary: Shows a beer by its name.
+      responses:
+        '200':
+          description: 'Beer with the specific name'
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Beers'
+        '404':
+          description: 'Name of the beer not found.'
 
 components:
   schemas:
