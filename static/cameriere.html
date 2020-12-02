@@ -11,6 +11,13 @@
                 }
                 setTimeout(setName,10);
             });
+
+            $( document ).ready( function() {
+                var cat=JSON.parse(localStorage.getItem("loggedUser")).category;
+                if(cat==null||cat!='cameriere'){
+                    window.location.replace("/",true);
+                }
+            });
         </script>
     </head>
     <body>
