@@ -7,29 +7,89 @@
     <div class="toHide">
         <form id="modifyForm" onsubmit="sendEditedBeer(); return false;">
             <span id="beerID"></span>
-            <input type="text" id='modifyBeer'>
+            <label for="modifyBeer">Nome:</label>
+            <input type="text" id='modifyBeer'><br>
+            <label for="img">Immagine:</label>
+            <input type="text" id='img'><br>
+            <label for="produttore">Produttore:</label>
+            <input type="text" id='produttore'><br>
+            <label for="distributore">Distributore:</label>
+            <input type="text" id='distributore'><br>
+            <label for="gradazioneAlcolica">Gradazione Alcolica:</label>
+            <input type="text" id='gradazioneAlcolica'><br>
+            <label for="tempoDiFermentazione">Tempo di fermentazione:</label>
+            <input type="text" id='tempoDiFermentazione'><br>
+            <label for="gusto">Gusto:</label>
+            <input type="text" id='gusto'><br>
+            <label for="calorie">Calorie:</label>
+            <input type="text" id='calorie'><br>
+            <label for="colore">Colore:</label>
+            <input type="text" id='colore'><br>
+            <label for="ingredienti">Ingredienti:</label>
+            <input type="text" id='ingredienti'><br>
             <input type="submit" value="Modifica Birra">
         </form>
     </div>
     <br><br>
+</div>
+<div class="addBeer">
     <div id="insertDiv">
         <form id="insertForm" onsubmit="addNewBeer(); return false;">
-            <input type="text" id='newBeerName'>
+            <label for="newBeerName">Nome:</label>
+            <input type="text" id='newBeerName'><br>
+            <label for="newBeerName">Immagine:</label>
+            <input type="text" id='img'><br>
+            <label for="newBeerName">Produttore:</label>
+            <input type="text" id='produttore'><br>
+            <label for="newBeerName">Distributore:</label>
+            <input type="text" id='distributore'><br>
+            <label for="newBeerName">Gradazione Alcolica:</label>
+            <input type="text" id='gradazioneAlcolica'><br>
+            <label for="newBeerName">Tempo di fermentazione:</label>
+            <input type="text" id='tempoDiFermentazione'><br>
+            <label for="newBeerName">Gusto:</label>
+            <input type="text" id='gusto'><br>
+            <label for="newBeerName">Calorie:</label>
+            <input type="text" id='calorie'><br>
+            <label for="newBeerName">Colore:</label>
+            <input type="text" id='colore'><br>
+            <label for="newBeerName">Ingredienti:</label>
+            <input type="text" id='ingredienti'><br>
             <input type="submit" value="Aggiungi Birra">
         </form>
     </div>
-    <button type="button" onclick="logout()">Log out</button>
 </div>
-
 <div class="searchBeerByName">
-    <div id="beerInfo">
-        <p id="beerInfoName"></p>
-        <img id="beerInfoImg">
+    <div id="beerInfo" class="toHide">
+        <label for="beerInfoName">Nome:</label>
+        <span id="beerInfoName"></span><br>
+        <label for="beerInfoImg">Immagine:</label><br>
+        <img id="beerInfoImg"><br>
+        <label for="produttore">Produttore:</label>
+        <span id="produttore"></span><br>
+        <label for="distributore">Distributore:</label>
+        <span id="distributore"></span><br>
+        <label for="gradazioneAlcolica">Gradazione Alcolica:</label>
+        <span id="gradazioneAlcolica"></span><br>
+        <label for="tempoDiFermentazione">Tempo Di Fermentazione:</label>
+        <span id="tempoDiFermentazione"></span><br>
+        <label for="gusto">Gusto:</label>
+        <span id="gusto"></span><br>
+        <label for="calorie">Calorie:</label>
+        <span id="calorie"></span><br>
+        <label for="colore">Colore:</label>
+        <span id="colore"></span><br>
+        <label for="ingredienti">Ingredienti:</label>
+        <span id="ingredienti"></span><br>
     </div>
     <div id="insertDiv">
         <form id="insertForm" onsubmit="searchBeer(); return false;">
-            <input type="text" id='beerName'>
+            <input type="text" id='beerName' list="suggestions">
+            <datalist id="suggestions">
+                
+            </datalist>
             <input type="submit" value="Cerca Birra">
         </form>
     </div>
 </div>
+
