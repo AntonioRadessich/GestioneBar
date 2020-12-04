@@ -199,7 +199,23 @@ paths:
                   $ref: '#/components/schemas/Beers'
         '404':
           description: 'Name of the beer not found.'
-
+  /birre/nome/closestMatch/{nome}:
+    get:
+      description: >-
+        Gets the list of beers that contains the string {nome}.
+      summary: Shows the list of beers that contains the string passed.
+      responses:
+        '200':
+          description: 'List of beers'
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Beers'
+        '404':
+          description: 'Beer not found.'
+  
 components:
   schemas:
     Users:
@@ -223,6 +239,15 @@ components:
       required:
         - id
         - name
+        - img
+        - produttore
+        - distributore
+        - gradazioneAlcolica
+        - tempoDiFermentazione
+        - gusto
+        - calorie
+        - colore 
+        - ingredienti
       properties:
         id:
           type: integer
@@ -230,3 +255,30 @@ components:
         name:
           type: string
           description: 'Name of the beer'
+        img:
+          type: string
+          description: 'Image of the beer'
+        produttore:
+          type: string
+          description: 'Producer of the beer'
+        distributore:
+          type: string
+          description: 'Dispenser of the beer'
+        gradazioneAlcolica:
+          type: number
+          description: 'Alcoholic grade of the beer'
+        tempoDiFermentazione:
+          type: integer
+          description: 'Fermentation period of the beer'
+        gusto:
+          type: string
+          description: 'Taste of the beer'
+        calorie:
+          type: string
+          description: 'Calories of the beer'
+        colore:
+          type: string
+          description: 'Color of the beer'
+        ingredienti:
+          type: string
+          description: 'Ingredients of the beer'
