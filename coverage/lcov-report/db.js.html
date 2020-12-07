@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">41.89% </span>
+                <span class="strong">27.03% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>31/74</span>
+                <span class='fraction'>20/74</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">12.5% </span>
+                <span class="strong">0% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>1/8</span>
+                <span class='fraction'>0/8</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">30% </span>
+                <span class="strong">15% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>6/20</span>
+                <span class='fraction'>3/20</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">41.89% </span>
+                <span class="strong">27.03% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>31/74</span>
+                <span class='fraction'>20/74</span>
             </div>
         
             
@@ -448,19 +448,19 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">14x</span>
-<span class="cline-any cline-yes">14x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -486,13 +486,13 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -680,20 +680,20 @@ const beers = {
 };
 &nbsp;
 const orders={
-    async insert(order) {
-        tmp=0;
-        var id = await conn.collection('Ordinazioni').find()
-        .forEach((entry) =&gt;{
-            <span class="missing-if-branch" title="else path not taken" >E</span>if(entry.id &gt; tmp){
-                tmp=entry.id;
+<span class="fstat-no" title="function not covered" >    as</span>ync insert(order) {
+<span class="cstat-no" title="statement not covered" >        tmp=0;</span>
+        var id = <span class="cstat-no" title="statement not covered" >await conn.collection('Ordinazioni').find()</span>
+        .forEach(<span class="fstat-no" title="function not covered" >(e</span>ntry) =&gt;{
+<span class="cstat-no" title="statement not covered" >            if(entry.id &gt; tmp){</span>
+<span class="cstat-no" title="statement not covered" >                tmp=entry.id;</span>
             }
         });
           
-        order.id=++tmp;
-        order.finished=false;
-        conn.collection('Ordinazioni').insertOne(order);
+<span class="cstat-no" title="statement not covered" >        order.id=++tmp;</span>
+<span class="cstat-no" title="statement not covered" >        order.finished=false;</span>
+<span class="cstat-no" title="statement not covered" >        conn.collection('Ordinazioni').insertOne(order);</span>
 &nbsp;
-        return order.id;
+<span class="cstat-no" title="statement not covered" >        return order.id;</span>
     },
 &nbsp;
     async all(){
@@ -718,18 +718,18 @@ const orders={
         return entriesToReturn;
     },
 &nbsp;
-    async delete(idNumber){
-        try{
-            await conn.collection('Ordinazioni').deleteOne({"id": parseInt(idNumber)})
+<span class="fstat-no" title="function not covered" >    as</span>ync delete(idNumber){
+<span class="cstat-no" title="statement not covered" >        try{</span>
+            var resp = <span class="cstat-no" title="statement not covered" >await conn.collection('Ordinazioni').deleteOne({"id": parseInt(idNumber)})</span>
         }
         catch(err){
 <span class="cstat-no" title="statement not covered" >            console.log(err);</span>
         }
-        return idNumber;
+<span class="cstat-no" title="statement not covered" >        return resp;</span>
     },
 &nbsp;
     async update(order) {
-        await conn.collection('Ordinazioni')
+        var resp = await conn.collection('Ordinazioni')
         .updateOne(
             {
                 id:parseInt(order.id)
@@ -747,7 +747,7 @@ const orders={
                 upsert:false 
             }
         )
-		return order.id;
+		return resp;
 	},
 }
 &nbsp;
@@ -763,7 +763,7 @@ module.exports = {
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank">istanbul</a>
-                at Mon Dec 07 2020 15:17:31 GMT+0100 (Ora standard dell’Europa centrale)
+                at Mon Dec 07 2020 16:12:47 GMT+0100 (中央ヨーロッパ標準時)
             </div>
         </div>
         <script src="prettify.js"></script>
