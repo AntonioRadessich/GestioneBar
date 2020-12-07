@@ -215,7 +215,57 @@ paths:
                   $ref: '#/components/schemas/Beers'
         '404':
           description: 'Beer not found.'
-  
+  /ordinazioni:
+    get:
+      description: >-
+        Gets the list of all the orders not finished yet.
+      summary: Shows the list of all orders not already finished.
+      responses:
+        '200':
+          description: 'Collection of orders'
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Orders'
+    post:
+      description: >-
+          Creates a new order to the database.
+      summary: Adds a new order.
+      responses:
+        '201':
+          description: 'Order has been created; link in the Location header'
+          headers:
+            'Location':
+              schema:
+                type: string
+              description: Link to the newly created order.
+        "405":
+            description: "Invalid input"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Orders'
+    put:
+      description: >-
+        Updates an already existing order.
+      summary: Updates an order's information.
+      responses:
+        '201':
+          description: 'Order has been successfully updated.'
+        '404':
+          description: 'Order to update not found.'
+    delete:
+      description: >-
+        Deletes an order.
+      summary: Deletes an order by its id.
+      responses:
+        '200':
+          description: 'Order has been successfully deleted.'
+        '404':
+          description: 'Order to delete not found.'
 components:
   schemas:
     Users:
@@ -282,3 +332,35 @@ components:
         ingredienti:
           type: string
           description: 'Ingredients of the beer'
+    Orders:
+      type: object
+      required:
+        - id
+        - user
+        - table
+        - listOfOrders
+        - finished
+      properties:
+        id:
+          type: integer
+          description: 'ID of the order'
+        user:
+          type: string
+          description: 'Name of the waiter or bartender who has taken the order'
+        table:
+          type: integer
+          description: 'Number used to idetify the table'
+        listOfOrders:
+          type: array
+          items:
+            properties:
+              beer:
+                type: string
+                description: 'name of the beer'
+              quantity:
+                type: number
+                description: 'quantity of the beer ordered, expressed in liters'
+          description: 'list of beers and quantity ordered'
+        finished:
+          type: boolean
+          description: 'false if the order is not already prepared, true otherwise'
