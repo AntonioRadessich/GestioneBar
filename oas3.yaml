@@ -25,14 +25,14 @@ paths:
                   $ref: '#/components/schemas/Users'
         '404':
           description: 'User not found'
-  /manager:
+  /{category}:
     get:
       description: >-
-        Gets the list of managers.
-      summary: Shows the list of all managers.
+        Gets the list of all users from the same category.
+      summary: Shows the list of all users from the same category.
       responses:
         '200':
-          description: 'Collection of manager'
+          description: 'Collection of users from the same category'
           content:
             application/json:
               schema:
@@ -40,8 +40,8 @@ paths:
                 items:
                   $ref: '#/components/schemas/Users'
         "400":
-          description: "Invalid status value"
-  /manager/users:
+          description: "Invalid input"
+  /users:
     post:
       description: >-
           Creates an new user.
@@ -54,7 +54,7 @@ paths:
               schema:
                 type: string
                 description: Link to the newly created user.
-        "405":
+        "400":
             description: "Invalid input"
       requestBody:
         content:
@@ -74,7 +74,7 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/Users'
-  /manager/users/{userId}:
+  /users/{userId}:
     get:
         description: >-
           Gets a user.
@@ -144,7 +144,7 @@ paths:
               schema:
                 type: string
               description: Link to the newly created beer.
-        "405":
+        "400":
             description: "Invalid input"
       requestBody:
         content:
@@ -241,7 +241,7 @@ paths:
               schema:
                 type: string
               description: Link to the newly created order.
-        "405":
+        "400":
             description: "Invalid input"
       requestBody:
         content:
