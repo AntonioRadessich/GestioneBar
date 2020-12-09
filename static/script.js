@@ -1,3 +1,5 @@
+var loggedUser={};
+
 function login()
 {
     //get the form object
@@ -6,8 +8,14 @@ function login()
     fetch('../api/v1?email=' + email)
     .then((resp) => resp.json()) // Transform the data into json
     .then(function(data) { // Here you get the data to modify as you please
-        document.cookie='loggedUser:'+data[0].email;
-        var category=data[0].category;
+        //document.cookie='loggedUser:'+data[0].email;
+        var category=data.category;
+        loggedUser.token=data.token;
+        loggedUser.category=data.category;
+        loggedUser.self=data.self;
+        loggedUser.email=data.email;
+        localStorage.setItem("loggedUser",JSON.stringify(loggedUser));
+        //alert(JSON.parse(localStorage.getItem("loggedUser")).token);
         window.location.replace("/"+category+".html",true);
         return false;
     })
@@ -16,23 +24,18 @@ function login()
 };
 
 function getUserEmail(){
-    var logged=document.cookie
-    .split("; ")
-    .find(row=>row.startsWith("loggedUser"))
-    .split(":")[1];
-    return logged;
+    //alert(localStorage.getItem("loggedUser").email);
+    return JSON.parse(localStorage.getItem("loggedUser")).email;
 }
 
 function getUser(){
-    var logged=document.cookie
-    .split("; ")
-    .find(row=>row.startsWith("loggedUser"))
-    .split(":")[1];
+    var logged=JSON.parse(localStorage.getItem("loggedUser")).email;
     logged=logged.split("@")[0];
     return logged;
 }
 
 function logout(){
-    document.cookie="loggedUser:";
+    loggedUser={};
+    localStorage.removeItem("loggedUser");
     window.location.href="../index.html";
 }

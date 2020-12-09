@@ -14,13 +14,16 @@
             });
 
             $( document ).ready( function() {
-                //document.getElementsByClassName('toHide').style.display="none";
+                var cat=JSON.parse(localStorage.getItem("loggedUser")).category;
+                if(cat==null||cat!='manager'){
+                    window.location.replace("/",true);
+                }
                 $(".toHide").hide();
                 getListUsers();
             });
             
             function getListUsers(){
-                $.getJSON("api/v1/manager/users",function(data){
+                $.getJSON("api/v1/manager/users?token="+JSON.parse(localStorage.getItem("loggedUser")).token,function(data){
                     //estrae gli header del json
                     var col=[];
                     for(var i=0;i<data.length;i++){
@@ -69,6 +72,10 @@
                 $.ajax({
                     url: 'api/v1/manager/users/'+id,
                     type: 'DELETE',
+                    headers: {
+                        'Content-Type':'application/json',
+                        'x-access-token':JSON.parse(localStorage.getItem("loggedUser")).token
+                    },
                     success: function(result){
                         getListUsers();
                     }
@@ -89,7 +96,10 @@
                    url: 'api/v1/manager/users',
                    type: 'POST',
                    data: JSON.stringify(newUser),
-                   contentType: "application/json; charset=utf-8",
+                   headers: {
+                        'Content-Type':'application/json',
+                        'x-access-token':JSON.parse(localStorage.getItem("loggedUser")).token
+                    },
                    success: function(result){
                        getListUsers();
                    }
@@ -132,7 +142,10 @@
                    url: 'api/v1/manager/users/'+document.getElementById('userID').innerHTML,
                    type: 'PUT',
                    data: JSON.stringify(newUser),
-                   contentType: "application/json; charset=utf-8",
+                   headers: {
+                        'Content-Type':'application/json',
+                        'x-access-token':JSON.parse(localStorage.getItem("loggedUser")).token
+                    },
                    success: function(result){
                        getListUsers();
                    }

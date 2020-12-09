@@ -2,6 +2,8 @@
 <html>
     <head>
         <title>Barista</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" type="text/css" href="styles/index.css">
         <script src="script.js"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
         <script>
@@ -13,14 +15,8 @@
                 setTimeout(setName,10);
             });
 
-            $( document ).ready( function() {
-                //document.getElementsByClassName('toHide').style.display="none";
-                $(".toHide").hide();
-                getBeersList();
-            });
-
             function getBeersList(){
-                $.getJSON("api/v1/birre",function(data){
+                $.getJSON("api/v1/birre?token="+JSON.parse(localStorage.getItem("loggedUser")).token,function(data){
                     var col=[];
                     for(var i=0;i<data.length;i++){
                         for(var j in data[i]){
@@ -33,7 +29,7 @@
                     table.setAttribute("id","beersTab");
                     //setta gli header nella tabella
                     var tr=table.insertRow(-1);
-                    for(var i=0;i<col.length;i++){
+                    for(var i=0;i<2;i++){
                         var th=document.createElement("th");
                         th.innerHTML=col[i];
                         tr.appendChild(th);
@@ -42,7 +38,7 @@
                     //scive i dati nella tabella
                     for(var i=0;i<data.length;i++){
                         tr=table.insertRow(-1);
-                        for(var j=0;j<col.length;j++){
+                        for(var j=0;j<2;j++){
                             var cell=tr.insertCell(-1);
                             cell.innerHTML=data[i][col[j]];
                         }
@@ -66,6 +62,10 @@
                 $.ajax({
                     url: 'api/v1/birre/'+id,
                     type: 'DELETE',
+                    headers: {
+                        'Content-Type':'application/json',
+                        'x-access-token':JSON.parse(localStorage.getItem("loggedUser")).token
+                    },
                     success: function(result){
                         getBeersList();
                     }
@@ -79,32 +79,66 @@
                 
                 var newBeer={
                     "name": ""+document.getElementById('newBeerName').value,
+                    "img": ""+document.getElementById('img').value,
+                    "infoGenerali":{
+                        "produttore": ""+document.getElementById('produttore').value,
+                        "distributore": ""+document.getElementById('distributore').value,
+                        "gradazioneAlcolica": ""+document.getElementById('gradazioneAlcolica').value,
+                        "tempoDiFermentazione": ""+document.getElementById('tempoDiFermentazione').value,
+                        "gusto": ""+document.getElementById('gusto').value,
+                        "calorie": ""+document.getElementById('calorie').value,
+                        "colore": ""+document.getElementById('colore').value,
+                    },
+                    "ingredienti":""+document.getElementById('ingredienti').value,
                 };
 
                 $.ajax({
                    url: 'api/v1/birre',
                    type: 'POST',
                    data: JSON.stringify(newBeer),
-                   contentType: "application/json; charset=utf-8",
+                   headers: {
+                       "Content-Type":"application/json",
+                       "x-access-token":JSON.parse(localStorage.getItem("loggedUser")).token
+                   },
                    success: function(result){
                        getBeersList();
                    }
                 });
                 document.getElementById('newBeerName').value="";
+                document.getElementById("img").value = "";
+                document.getElementById("produttore").value = "";
+                document.getElementById("distributore").value = "";
+                document.getElementById("gradazioneAlcolica").value = "";
+                document.getElementById("tempoDiFermentazione").value = "";
+                document.getElementById("gusto").value = "";
+                document.getElementById("calorie").value = "";
+                document.getElementById("colore").value = "";
+                document.getElementById("ingredienti").value = "";
                 return false;
             }
 
             function editBeer(id){
                 $(".toHide").show();
                 id=id.substr(6);
-                var name=document.getElementById('beersTab').rows[id].cells[1].innerHTML;
+                $.getJSON("api/v1/birre/nome/"+document.getElementById('beersTab').rows[id].cells[1].innerHTML+"?token="+JSON.parse(localStorage.getItem("loggedUser")).token,function(data){
+                    document.getElementById("modifyBeer").value = data[0].name;
+                    document.getElementById("img").value = data[0].img;
+                    document.getElementById("produttore").value = data[0].produttore;
+                    document.getElementById("distributore").value = data[0].distributore;
+                    document.getElementById("gradazioneAlcolica").value = data[0].gradazioneAlcolica;
+                    document.getElementById("tempoDiFermentazione").value = data[0].tempoDiFermentazione;
+                    document.getElementById("gusto").value = data[0].gusto;
+                    document.getElementById("calorie").value = data[0].calorie;
+                    document.getElementById("colore").value = data[0].colore;
+                    document.getElementById("ingredienti").value = data[0].ingredienti;
 
+                });
                 id=document.getElementById('beersTab').rows[id].cells[0].innerHTML;
                 id=id.split("/");
                 id=id[id.length-1];
 
                 document.getElementById("beerID").innerHTML=id;
-                document.getElementById("modifyBeer").value=name;
+                //document.getElementById("modifyBeer").value=name;
             }
 
             function sendEditedBeer(){
@@ -115,13 +149,27 @@
                 var newBeer={
                     "id": parseInt(document.getElementById('beerID').innerHTML),
                     "name": ""+document.getElementById('modifyBeer').value,
+                    "img": ""+document.getElementById('img').value,
+                    "infoGenerali":{
+                        "produttore": ""+document.getElementById('produttore').value,
+                        "distributore": ""+document.getElementById('distributore').value,
+                        "gradazioneAlcolica": ""+document.getElementById('gradazioneAlcolica').value,
+                        "tempoDiFermentazione": ""+document.getElementById('tempoDiFermentazione').value,
+                        "gusto": ""+document.getElementById('gusto').value,
+                        "calorie": ""+document.getElementById('calorie').value,
+                        "colore": ""+document.getElementById('colore').value,
+                    },
+                    "ingredienti":""+document.getElementById('ingredienti').value,
                 };
 
                 $.ajax({
                    url: 'api/v1/birre/',
                    type: 'PUT',
                    data: JSON.stringify(newBeer),
-                   contentType: "application/json; charset=utf-8",
+                   headers: {
+                       "Content-Type":"application/json",
+                       "x-access-token":JSON.parse(localStorage.getItem("loggedUser")).token
+                   },
                    success: function(result){
                        getBeersList();
                    }
@@ -131,31 +179,110 @@
                 $(".toHide").hide();
                 return false;
             }
+            $(document).ready(function() {
+                var cat=JSON.parse(localStorage.getItem("loggedUser")).category;
+                if(cat==null||cat!='barista'){
+                    window.location.replace("/",true);
+                }
+                $("#home").click( function(){
+                    $( ".main" ).html(" ");
+                } );
+                $("#modBirre").click( function(){
+                    $( ".main" ).html(" ");
+                    $( ".main" ).load( "baristaLoad.html .modifyBeer", function(){
+                        $(".toHide").hide();
+                    });
+                    getBeersList();
+                });
+                $("#addBirre").click( function(){
+                    $( ".main" ).html(" ");
+                    $( ".main" ).load( "baristaLoad.html .addBeer" );
+                    getBeersList();
+                });
+                $("#ricNome").click( function(){
+                    $( ".main" ).html(" ");
+                    $( ".main" ).load( "baristaLoad.html .searchBeerByName",function(){
+                        $(".toHide").hide();
+                        $("#beerName").on("input", function(){
+                            var textContent = this.value;
+                            if(textContent==""||textContent==null){
+                                $.getJSON("api/v1/birre"+"?token="+JSON.parse(localStorage.getItem("loggedUser")).token,function(data){
+                                $("#suggestions").empty();
+                                for(var i=0;i<data.length;i++){ 
+                                    $("#suggestions").append("<option value='"+ data[i].name +"''></option>")
+                                }
+                                });
+                            }
+                            else{
+                                $.getJSON("api/v1/birre/nome/closestMatch/"+textContent+"?token="+JSON.parse(localStorage.getItem("loggedUser")).token,function(data){
+                                $("#suggestions").empty();
+                                for(var i=0;i<data.length;i++){ 
+                                    $("#suggestions").append("<option value='"+ data[i].name +"''></option>")
+                                }
+                                });
+                            }
+                        });
+                    });
+                    
+                    
+                } );
+            
+            });
+            
+            function searchBeer(){
+                if(document.getElementById('beerName')==""){
+                   return false; 
+                }
+                $(".toHide").show();
+                var beer={
+                    "name": ""+document.getElementById('beerName').value
+                };
 
+                $.getJSON("api/v1/birre/nome/"+beer.name+"?token="+JSON.parse(localStorage.getItem("loggedUser")).token,function(data){
+                    document.getElementById("beerInfoName").innerText = data[0].name;
+                    document.getElementById("beerInfoImg").src = data[0].img;
+                    document.getElementById("produttore").innerText = data[0].produttore;
+                    document.getElementById("distributore").innerText = data[0].distributore;
+                    document.getElementById("gradazioneAlcolica").innerText = data[0].gradazioneAlcolica;
+                    document.getElementById("tempoDiFermentazione").innerText = data[0].tempoDiFermentazione;
+                    document.getElementById("gusto").innerText = data[0].gusto;
+                    document.getElementById("calorie").innerText = data[0].calorie;
+                    document.getElementById("colore").innerText = data[0].colore;
+                    document.getElementById("ingredienti").innerText = data[0].ingredienti;
+
+                });
+                document.getElementById('beerName').value="";
+                return false;
+            }
         </script>
-    </head>
-    <body>
-        <h4 id="welcome"></h4>
-        <div id="mainBody">
-            <div id="beersList"></div>
-        </div>
-
-        <br class="toHide"><br class="toHide">
-        <div class="toHide">
-            <form id="modifyForm" onsubmit="sendEditedBeer(); return false;">
-                <span id="beerID"></span>
-                <input type="text" id='modifyBeer'>
-                <input type="submit" value="Modifica Birra">
-            </form>
-        </div>
         
-        <br><br>
-        <div id="insertDiv">
-            <form id="insertForm" onsubmit="addNewBeer(); return false;">
-                <input type="text" id='newBeerName'>
-                <input type="submit" value="Aggiungi Birra">
-            </form>
+    </head>
+    <body style="background-image: none;">
+        <div id="main">
+            <h4 id="welcome"></h4>
+            <div id="nav">
+                <ul>
+                    <li><a id="home">Home</a></li>
+                    <li class="dropdown">
+                        <a href="javascript:void(0)" class="dropbtn">Gestione birre</a>
+                        <div class="dropdown-content">
+                            <a id="addBirre">Aggiungi birre</a>
+                            <a id="modBirre">Visualizza birre</a>
+                        </div>
+                    </li>
+                    <li class="dropdown">
+                        <a href="javascript:void(0)" class="dropbtn">Ricerca</a>
+                        <div class="dropdown-content">
+                        <a id="ricNome">Ricerca per nome</a>
+                        </div>
+                    </li>
+                    <li><a id="logout" onclick="logout()">Log out</a></li>
+                </ul>
+            </div>
+            <div class="main">
+                
+            </div>
+            
         </div>
-        <button type="button" onclick="logout()">Log out</button>
     </body>
 </html>

@@ -383,8 +383,8 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -399,30 +399,17 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -432,7 +419,29 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -611,6 +620,71 @@ const users = {
        }
        
 <span class="cstat-no" title="statement not covered" >        return usersToReturn;</span>
+    }
+};
+&nbsp;
+const beers = {
+    async insert(beer) {
+        tmp=0;
+        var id = await conn.collection('Birre').find()
+        .forEach(<span class="fstat-no" title="function not covered" >(e</span>ntry) =&gt;{
+<span class="cstat-no" title="statement not covered" >            if(entry.id &gt; tmp){</span>
+<span class="cstat-no" title="statement not covered" >                tmp=entry.id;</span>
+            }
+        });
+          
+<span class="cstat-no" title="statement not covered" >        beer.id=++tmp;</span>
+<span class="cstat-no" title="statement not covered" >        conn.collection('Birre').insertOne(beer);</span>
+<span class="cstat-no" title="statement not covered" >        console.log(""+beer.id);</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        return beer.id;</span>
+    },
+&nbsp;
+    async update(beer) {
+        await conn.collection('Birre')
+        .updateOne(
+            {
+                id : parseInt(beer.id)
+            },
+            {
+                $set:{
+                    id : beer.id,
+                    "name" : ""+beer.name,
+                }
+            },
+            { 
+                upsert: false 
+            }
+        )
+<span class="cstat-no" title="statement not covered" >		return beer.id;</span>
+	},
+&nbsp;
+    async all() {
+        var entriesToReturn=[];
+        try{
+         await conn.collection('Birre').find()
+         .forEach(<span class="fstat-no" title="function not covered" >(e</span>ntry)=&gt;{
+<span class="cstat-no" title="statement not covered" >                entriesToReturn.push({</span>
+                     "id":""+entry.id,
+                     "name":""+entry.name,
+                 });
+             });
+        }
+        catch(err){
+            console.log(err);
+        }
+        
+        return entriesToReturn;
+    },
+&nbsp;
+<span class="fstat-no" title="function not covered" >    as</span>ync delete(idNumber){
+<span class="cstat-no" title="statement not covered" >        try{</span>
+<span class="cstat-no" title="statement not covered" >            await conn.collection('Birre').deleteOne({"id": parseInt(idNumber)})</span>
+        }
+        catch(err){
+<span class="cstat-no" title="statement not covered" >            console.log(err);</span>
+        }
+<span class="cstat-no" title="statement not covered" >        return idNumber;</span>
     }
 };
 &nbsp;

@@ -2,7 +2,10 @@
 <html>
     <head>
         <title>Cameriere</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" type="text/css" href="styles/index.css">
         <script src="script.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
         <script>
             document.addEventListener("DOMContentLoaded", function(){
 
@@ -11,10 +14,131 @@
                 }
                 setTimeout(setName,10);
             });
+
+            function getBeersList(){
+                $.getJSON("api/v1/birre?token="+JSON.parse(localStorage.getItem("loggedUser")).token,function(data){
+                    var col=[];
+                    for(var i=0;i<data.length;i++){
+                        for(var j in data[i]){
+                            if(col.indexOf(j)===-1){
+                                col.push(j);
+                            }
+                        }
+                    }
+                    var table=document.createElement("table");
+                    table.setAttribute("id","beersTab");
+                    //setta gli header nella tabella
+                    var tr=table.insertRow(-1);
+                    for(var i=0;i<2;i++){
+                        var th=document.createElement("th");
+                        th.innerHTML=col[i];
+                        tr.appendChild(th);
+                    }
+
+                    //scive i dati nella tabella
+                    for(var i=0;i<data.length;i++){
+                        tr=table.insertRow(-1);
+                        for(var j=0;j<2;j++){
+                            var cell=tr.insertCell(-1);
+                            cell.innerHTML=data[i][col[j]];
+                        }
+                    }
+                var divContainer=document.getElementById('beersList');
+                divContainer.innerHTML="";
+                divContainer.appendChild(table);
+                });
+            }
+
+            function searchBeer(){
+                if(document.getElementById('beerName')==""){
+                   return false; 
+                }
+                $(".toHide").show();
+                var beer={
+                    "name": ""+document.getElementById('beerName').value
+                };
+
+                $.getJSON("api/v1/birre/nome/"+beer.name+"?token="+JSON.parse(localStorage.getItem("loggedUser")).token,function(data){
+                    document.getElementById("beerInfoName").innerText = data[0].name;
+                    document.getElementById("beerInfoImg").src = data[0].img;
+                    document.getElementById("produttore").innerText = data[0].produttore;
+                    document.getElementById("distributore").innerText = data[0].distributore;
+                    document.getElementById("gradazioneAlcolica").innerText = data[0].gradazioneAlcolica;
+                    document.getElementById("tempoDiFermentazione").innerText = data[0].tempoDiFermentazione;
+                    document.getElementById("gusto").innerText = data[0].gusto;
+                    document.getElementById("calorie").innerText = data[0].calorie;
+                    document.getElementById("colore").innerText = data[0].colore;
+                    document.getElementById("ingredienti").innerText = data[0].ingredienti;
+
+                });
+                document.getElementById('beerName').value="";
+                return false;
+            }
+
+            $( document ).ready( function() {
+                var cat=JSON.parse(localStorage.getItem("loggedUser")).category;
+                if(cat==null||cat!='cameriere'){
+                    window.location.replace("/",true);
+                }
+
+                $("#home").click( function(){
+                    $( ".main" ).html(" ");
+                } );
+                $("#modBirre").click( function(){
+                    $( ".main" ).html(" ");
+                    $( ".main" ).load( "baristaLoad.html .modifyBeer", function(){
+                        $(".toHide").hide();
+                    });
+                    getBeersList();
+                });
+                $("#ricNome").click( function(){
+                    $( ".main" ).html(" ");
+                    $( ".main" ).load( "baristaLoad.html .searchBeerByName",function(){
+                        $(".toHide").hide();
+                        $("#beerName").on("input", function(){
+                            var textContent = this.value;
+                            if(textContent==""||textContent==null){
+                                $.getJSON("api/v1/birre"+"?token="+JSON.parse(localStorage.getItem("loggedUser")).token,function(data){
+                                $("#suggestions").empty();
+                                for(var i=0;i<data.length;i++){ 
+                                    $("#suggestions").append("<option value='"+ data[i].name +"''></option>")
+                                }
+                                });
+                            }
+                            else{
+                                $.getJSON("api/v1/birre/nome/closestMatch/"+textContent+"?token="+JSON.parse(localStorage.getItem("loggedUser")).token,function(data){
+                                $("#suggestions").empty();
+                                for(var i=0;i<data.length;i++){ 
+                                    $("#suggestions").append("<option value='"+ data[i].name +"''></option>")
+                                }
+                                });
+                            }
+                        });
+                    });   
+                });
+            });
         </script>
     </head>
-    <body>
-        <h4 id="welcome"></h4>
-        <button type="button" onclick="logout()">Log out</button>
+    <body style="background-image: none;">
+        <div id="main">
+            <h4 id="welcome"></h4>
+            <div id="nav">
+                <ul>
+                    <li><a id="home">Home</a></li>
+                    <li class="dropdown">
+                        <a href="javascript:void(0)" class="dropbtn">Birre</a>
+                        <div class="dropdown-content">
+                            <a id="modBirre">Visualizza birre</a>
+                            <a id="ricNome">Ricerca per nome</a>
+                        </div>
+                    </li>
+                    <li><a id="logout" onclick="logout()">Log out</a></li>
+                </ul>
+            </div>
+            <div class="main">
+                
+            </div>
+            
+        </div>
     </body>
 </html>
