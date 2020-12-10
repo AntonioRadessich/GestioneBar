@@ -3,6 +3,7 @@
     <head>
         <title>Manager</title>
         <script src="script.js"></script>
+        <link rel="stylesheet" type="text/css" href="styles/index.css">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
         <script>
             document.addEventListener("DOMContentLoaded", function(){
@@ -155,40 +156,46 @@
                 $(".toHide").hide();
                 return false;
             }
+
+            $(document).ready(function() {
+                $("#home").click( function(){
+                    $( ".main" ).html(" ");
+                } );
+                $("#modUtenti").click( function(){
+                    $( ".main" ).html(" ");
+                    $( ".main" ).load( "managerLoad.html .modifyUser", function(){
+                        $(".toHide").hide();
+                    });
+                    getListUsers();
+                });
+                $("#addUtente").click( function(){
+                    $( ".main" ).html(" ");
+                    $( ".main" ).load( "managerLoad.html .addUser" );
+                    getListUsers();
+                });
+            });
+
         </script>
     </head>
     <body>
-        <h4 id="welcome"></h4>
-        <div id="mainBody">
-            <div id="workersList"></div>
+        <div id="main">
+            <h4 id="welcome" style="font-size: 36px; font-family:verdana; margin:20px; margin-left: 5px; color: white;"></h4>
+            <div id="nav" style="font-size: 20px; font-family:verdana;">
+                <ul style="height: 62px; width:100%">
+                    <li><a id="home">Home</a></li>
+                    <li class="dropdown">
+                        <a href="javascript:void(0)" class="dropbtn">Gestione Utenti</a>
+                        <div class="dropdown-content">
+                            <a id="addUtente">Aggiungi utente</a>
+                            <a id="modUtenti">Visualizza utenti</a>
+                        </div>
+                    </li>
+                    <li style="position: relative; float: right;"><a id="logout" style="padding-top: 9px; padding-bottom: 9px;" onclick="logout()"><img src="https://flaticons.net/icon.php?slug_category=mobile-application&slug_icon=logout" width="40px" height="40px"></a></li>
+                </ul>
+            </div>
+            <div class="main">
+
+            </div>
         </div>
-        
-        <br class="toHide"><br class="toHide">
-        <div class="toHide">
-            <form id="modifyForm" onsubmit="sendModifyUser(); return false;">
-                <span id="userID"></span>
-                <input type="text" id='changeEmail'>
-                <select id='changeCategory'>
-                    <option value="manager">manager</option>
-                    <option value="barista">barista</option>
-                    <option value="cameriere">cameriere</option>
-                </select>
-                <input type="submit" value="Modifica utente">
-            </form>
-        </div>
-        
-        <br><br>
-        <div id="insertDiv">
-            <form id="insertForm" onsubmit="addNewUser(); return false;">
-                <input type="text" id='newEmail'>
-                <select id='newCategory'>
-                    <option value="manager">manager</option>
-                    <option value="barista">barista</option>
-                    <option value="cameriere">cameriere</option>
-                </select>
-                <input type="submit" value="Aggiungi utente">
-            </form>
-        </div>
-        <button type="button" onclick="logout()">Log out</button>
     </body>
 </html>

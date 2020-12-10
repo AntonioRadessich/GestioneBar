@@ -1,0 +1,86 @@
+<div class="modifyUser">
+    <br>
+    <div style="
+    border-radius: 15px;
+    background:white;
+    padding-top: 50px;
+    width: 90%;
+    height: 350px;  
+    padding-left: 20px;
+    padding-right: 100px;">
+    <div id="mainBody">
+        <div id="workersList"></div>
+    </div>
+
+    <br class="toHide"><br class="toHide">
+    <div class="toHide">
+        <form id="modifyForm" onsubmit="sendModifyUser(); return false;">
+            <span id="userID"></span>
+            <input type="text" id='changeEmail'>
+            <select id='changeCategory'>
+                <option value="manager">manager</option>
+                <option value="barista">barista</option>
+                <option value="cameriere">cameriere</option>
+            </select>
+            <input type="submit" value="Modifica utente">
+        </form>
+    </div>
+    <br><br>
+    </div>
+</div>
+
+
+
+<div class="addUser" style="margin-top: 30px;">
+    <div id="insertDiv">
+        <form id="insertForm" style="height: 46px;" onsubmit="addNewUser(); return false;">
+            
+            <div style="
+            border-radius: 15px;
+            background:white;
+            padding-top: 50px;
+            width: 40%;
+            height: 150px;  
+            padding-left: 20px;
+            margin-left: 25%;
+            margin-top: 10%;
+            padding-right: 100px;">
+                <img id="emailIcon" style="
+                width: 46px; 
+                height: 46px; 
+                vertical-align: middle;" 
+                src="https://icon-library.com/images/username-icon-png/username-icon-png-19.jpg">
+                <input type="text" id='newEmail' placeholder="Email" style="height: 40px; border-radius: 15px; width: 470px; font-size: 16px; margin-left: 10px; font-family: verdana; vertical-align: top;">
+                <br><br>
+                <select id='newCategory' style="height: 46px; border-radius: 15px; width: 110px; margin-left: 200px; vertical-align: top; font-size: 16px; font-family: verdana;">
+                    <option value="manager">manager</option>
+                    <option value="barista">barista</option>
+                    <option value="cameriere">cameriere</option>
+                </select>
+                <input type="submit" style="
+                                margin-left: 5px; 
+                                vertical-align: top; 
+                                width: 46px; height: 46px; 
+                                border-radius: 10px;  
+                                background-image: url('https://static.thenounproject.com/png/1053562-200.png'); 
+                                background-repeat: no-repeat;
+                                background-position: center;
+                                background-size: 80%; padding-right:30px;" value="">
+            </form>
+        </div>
+
+
+            </div>
+
+</div>
+    <div id="insertDiv">
+        <form id="insertForm" onsubmit="searchUser(); return false;">
+            <input type="text" id='userName' list="suggestions">
+            <datalist id="suggestions">
+                
+            </datalist>
+            <input type="submit" value="Cerca Utente">
+        </form>
+    </div>
+</div>
+
