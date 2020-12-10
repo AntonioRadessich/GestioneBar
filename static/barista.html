@@ -179,13 +179,208 @@
                 $(".toHide").hide();
                 return false;
             }
+
+            function getOrders(){
+                $.getJSON("api/v1/ordinazioni?token="+JSON.parse(localStorage.getItem("loggedUser")).token,function(data){
+                    var col=[];
+                    for(var i=0;i<data.length;i++){
+                        for(var j in data[i]){
+                            if(col.indexOf(j)===-1){
+                                col.push(j);
+                            }
+                        }
+                    }
+                    
+                    var table=document.createElement("table");
+                    table.setAttribute("id","ordersTab");
+                    //setta gli header nella tabella
+                    var tr=table.insertRow(-1);
+                    for(var i=0;i<col.length;i++){
+                        var th=document.createElement("th");
+                        th.innerHTML=col[i];
+                        tr.appendChild(th);
+                    }
+
+                    //scive i dati nella tabella
+                    for(var i=0;i<data.length;i++){
+                        tr=table.insertRow(-1);
+                        for(var j=0;j<col.length;j++){
+                            var cell=tr.insertCell(-1);
+                            if(j==2){
+                                var str="";
+                                for(var k in data[i][col[j]]){
+                                    str=str+data[i][col[j]][k]["beer"];
+                                    str=str+": "+data[i][col[j]][k]["quantity"];
+                                    str=str+"<br>";
+                                }
+                                cell.innerHTML=str;
+                            }
+                            else{
+                                cell.innerHTML=data[i][col[j]];
+                            }
+                        }
+                         
+                        var cell3=tr.insertCell(-1);
+                        cell3.innerHTML="<button type='button' id='orderFinished"+(i+1)+"' onclick='orderFinished(this.id)'>Finished</button>";
+                        var cell2=tr.insertCell(-1);
+                        cell2.innerHTML="<button type='button' id='modifyOrder"+(i+1)+"' onclick='modifyOrder(this.id)'>Modify</button>";
+                        var cell=tr.insertCell(-1);
+                        cell.innerHTML="<button type='button' id='deleteOrder"+(i+1)+"' onclick='deleteOrder(this.id)'>Delete</button>";
+                    }
+                var divContainer=document.getElementById('ordersList');
+                divContainer.innerHTML="";
+                divContainer.appendChild(table);
+                });
+            }
+            
+            function orderFinished(id){
+                id=id.substr(13);
+                var tabId=id;
+                id=document.getElementById('ordersTab').rows[id].cells[0].innerHTML;
+                id=id.split("/");
+                id=id[id.length-1];
+
+                var listOfOrders=[];
+                var all=document.getElementById('ordersTab').rows[tabId].cells[2].innerHTML;
+                all=all.split('<br>');
+                for(var i=0;i<all.length-1;i++){
+                    var splitted=all[i].split(': ');
+                    var obj={
+                        "beer":""+splitted[0],
+                        "quantity":""+splitted[1]
+                    }
+                    listOfOrders.push(obj);
+                }
+                
+                var preparedJSON={
+                    "id":""+id,
+                    "user":""+document.getElementById('ordersTab').rows[tabId].cells[1].innerHTML,
+                    "listOfOrders": listOfOrders,
+                    "table": document.getElementById('ordersTab').rows[tabId].cells[3].innerHTML,
+                    "finished": true
+                };
+
+                $.ajax({
+                    url: 'api/v1/ordinazioni',
+                    type: 'PUT',
+                    data: JSON.stringify(preparedJSON),
+                    headers: {
+                        'Content-Type':'application/json',
+                        'x-access-token':JSON.parse(localStorage.getItem("loggedUser")).token
+                    },
+                    success: function(result){
+                        getOrders();
+                    }
+                });             
+            }
+
+            var numeroDiOrdini;
+
+            function modifyOrder(id){
+                $(".toHide").show();
+
+                id=id.substr(11);
+                var tabId=id;
+                id=document.getElementById('ordersTab').rows[id].cells[0].innerHTML;
+                id=id.split("/");
+                id=id[id.length-1];
+
+                var listOfOrders=[];
+                var all=document.getElementById('ordersTab').rows[tabId].cells[2].innerHTML;
+                all=all.split('<br>');
+                for(var i=0;i<all.length-1;i++){
+                    var splitted=all[i].split(': ');
+                    var obj={
+                        "beer":""+splitted[0],
+                        "quantity":""+splitted[1]
+                    }
+                    listOfOrders.push(obj);
+                }
+                
+                document.getElementById('laMiaMorte').innerHTML="";
+                for(var i=0;i<listOfOrders.length;i++){
+                    $("#laMiaMorte").append(
+                        "<label for='modifyBeer"+i+"'>Beer:</label>"+
+                        "<input type='text' value='"+listOfOrders[i].beer+"' id='modifyBeer"+i+"'><br>"+
+                        "<label for='modifyQuantity"+i+"'>Quantity:</label>"+
+                        "<input type='number' step='0.1' value='"+listOfOrders[i].quantity+"' id='modifyQuantity"+i+"'><br>"+
+                        "<br>"
+                    );
+                
+                }
+                document.getElementById('orderID').innerText=""+document.getElementById('ordersTab').rows[tabId].cells[0].innerHTML;
+                document.getElementById('modifyUser').value=""+document.getElementById('ordersTab').rows[tabId].cells[1].innerHTML;
+                document.getElementById('modifyTable').value=""+document.getElementById('ordersTab').rows[tabId].cells[3].innerHTML;
+                numeroDiOrdini=listOfOrders.length;
+            }
+
+            function sendModifyOrder(){
+                var listOfOrders=[];
+                for(var i=0;i<numeroDiOrdini;i++){
+                    var obj={
+                        "beer":""+document.getElementById('modifyBeer'+i).value,
+                        "quantity":""+document.getElementById('modifyQuantity'+i).value
+                    }
+                    listOfOrders.push(obj);
+                }
+
+                var preparedJSON={
+                    "id":""+document.getElementById('orderID').innerText,
+                    "user":""+document.getElementById('modifyUser').value,
+                    "listOfOrders":listOfOrders,
+                    "table":""+document.getElementById('modifyTable').value
+                }
+
+                $.ajax({
+                    url: 'api/v1/ordinazioni',
+                    type: 'PUT',
+                    data: JSON.stringify(preparedJSON),
+                    headers: {
+                        'Content-Type':'application/json',
+                        'x-access-token':JSON.parse(localStorage.getItem("loggedUser")).token
+                    },
+                    success: function(result){
+                        getOrders();
+                    }
+                }); 
+
+                $(".toHide").hide();
+            }
+
+            function deleteOrder(id){
+                id=id.substr(11);
+                id=document.getElementById('ordersTab').rows[id].cells[0].innerHTML;
+                id=id.split("/");
+                id=id[id.length-1];
+                $.ajax({
+                    url: 'api/v1/ordinazioni/'+id,
+                    type: 'DELETE',
+                    headers: {
+                        'Content-Type':'application/json',
+                        'x-access-token':JSON.parse(localStorage.getItem("loggedUser")).token
+                    },
+                    success: function(result){
+                        getOrders();
+                    }
+                });
+            }
+
             $(document).ready(function() {
                 var cat=JSON.parse(localStorage.getItem("loggedUser")).category;
                 if(cat==null||cat!='barista'){
                     window.location.replace("/",true);
                 }
+                $( ".main" ).load( "baristaLoad.html .homeDiv",function(){
+                    $( ".toHide").hide();
+                });
+                getOrders();
+
                 $("#home").click( function(){
                     $( ".main" ).html(" ");
+                    $( ".main" ).load( "baristaLoad.html .homeDiv",function(){
+                        $( ".toHide").hide();
+                    });
+                    getOrders();
                 } );
                 $("#modBirre").click( function(){
                     $( ".main" ).html(" ");
@@ -279,6 +474,7 @@
                     <li><a id="logout" onclick="logout()">Log out</a></li>
                 </ul>
             </div>
+            <br>
             <div class="main">
                 
             </div>
