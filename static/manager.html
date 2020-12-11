@@ -35,6 +35,8 @@
                         }
                     }
 
+                    var bglength=document.getElementById('listBackground');
+                    bglength.style.height = 250+data.length*52+"px";
                     var table=document.createElement("table");
                     table.setAttribute("id","workersTable");
                     //setta gli header nella tabella
@@ -53,9 +55,9 @@
                             cell.innerHTML=data[i][col[j]];
                         }
                         var cell2=tr.insertCell(-1);
-                        cell2.innerHTML="<button type='button' id='modify"+(i+1)+"' onclick='modifyUser(this.id)'>Modify</button>";
+                        cell2.innerHTML="<button type='button' class='modifyButton' id='modify"+(i+1)+"' onclick='modifyUser(this.id)'> </button>";
                         var cell=tr.insertCell(-1);
-                        cell.innerHTML="<button type='button' id='delete"+(i+1)+"' onclick='deleteUser(this.id)'>Delete</button>";
+                        cell.innerHTML="<button type='button' class='deleteButton' id='delete"+(i+1)+"' onclick='deleteUser(this.id)'> </button>";
                     }
 
                     var divContainer=document.getElementById('workersList');
@@ -123,6 +125,7 @@
                 id=id[id.length-1];
 
                 document.getElementById("userID").innerHTML=id;
+                document.getElementById("userID").style.display= "none";
                 document.getElementById("changeEmail").value=email;
                 document.getElementById("changeCategory").value=category;
                 
