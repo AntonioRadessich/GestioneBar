@@ -372,6 +372,31 @@
                 }
                 $( ".main" ).load( "baristaLoad.html .homeDiv",function(){
                     $( ".toHide").hide();
+                    $("#orderMore").hide();
+                    $("#orderBeer").on("input", function(){
+                        var textContent = this.value;
+                        if(textContent==""||textContent==null){
+                            $.getJSON("api/v1/birre"+"?token="+JSON.parse(localStorage.getItem("loggedUser")).token,function(data){
+                                $("#suggestions").empty();
+                                for(var i=0;i<data.length;i++){ 
+                                    $("#suggestions").append("<option value='"+ data[i].name +"''></option>")
+                                }
+                            });
+                        }
+                        else{
+                            $.getJSON("api/v1/birre/nome/closestMatch/"+textContent+"?token="+JSON.parse(localStorage.getItem("loggedUser")).token,function(data){
+                                $("#suggestions").empty();
+                                for(var i=0;i<data.length;i++){ 
+                                    if(textContent==data[i].name){
+                                        $("#orderImg").attr("src",data[i].img);
+                                    }else{
+                                        $("#orderImg").attr("src","");
+                                    }
+                                    $("#suggestions").append("<option value='"+ data[i].name +"''></option>")
+                                }
+                            });
+                        }
+                    });
                 });
                 getOrders();
 
@@ -379,9 +404,34 @@
                     $( ".main" ).html(" ");
                     $( ".main" ).load( "baristaLoad.html .homeDiv",function(){
                         $( ".toHide").hide();
+                        $("#orderMore").hide();
+                        $("#orderBeer").on("input", function(){
+                            var textContent = this.value;
+                            if(textContent==""||textContent==null){
+                                $.getJSON("api/v1/birre"+"?token="+JSON.parse(localStorage.getItem("loggedUser")).token,function(data){
+                                    $("#suggestions").empty();
+                                    for(var i=0;i<data.length;i++){ 
+                                        $("#suggestions").append("<option value='"+ data[i].name +"''></option>")
+                                    }
+                                });
+                            }
+                            else{
+                                $.getJSON("api/v1/birre/nome/closestMatch/"+textContent+"?token="+JSON.parse(localStorage.getItem("loggedUser")).token,function(data){
+                                    $("#suggestions").empty();
+                                    for(var i=0;i<data.length;i++){ 
+                                        if(textContent==data[i].name){
+                                            $("#orderImg").attr("src",data[i].img);
+                                        }else{
+                                            $("#orderImg").attr("src","");
+                                        }
+                                        $("#suggestions").append("<option value='"+ data[i].name +"''></option>")
+                                    }
+                                });
+                            }
+                        });
                     });
                     getOrders();
-                } );
+                });
                 $("#modBirre").click( function(){
                     $( ".main" ).html(" ");
                     $( ".main" ).load( "baristaLoad.html .modifyBeer", function(){
@@ -418,10 +468,7 @@
                             }
                         });
                     });
-                    
-                    
-                } );
-            
+                });
             });
             
             function searchBeer(){
@@ -448,6 +495,30 @@
                 });
                 document.getElementById('beerName').value="";
                 return false;
+            }
+
+            var ordini = [];
+            function addMore(){
+                $("#orderTable").prop( "disabled", true );
+                var obj = { "beer":document.getElementById("orderBeer").value, 'quantity': parseInt(document.getElementById("orderQuantity").value)};
+                ordini.push(obj);
+                $("#orderMore").show();
+            }
+            function makeOrder(){
+                $("#orderTable").prop( "disabled", false );
+                var obj = { "user":getUser(), "listOfOrders":ordini, "table": document.getElementById("orderTable").value}
+                $.ajax({
+                   url: 'api/v1/ordinazioni',
+                   type: 'POST',
+                   data: JSON.stringify(obj),
+                   headers: {
+                       "Content-Type":"application/json",
+                       "x-access-token":JSON.parse(localStorage.getItem("loggedUser")).token
+                   },
+                   success: function(result){
+                       getOrders();
+                   }
+                });
             }
         </script>
         
