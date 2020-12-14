@@ -58,6 +58,17 @@ table#workersTable {
     padding-bottom: 20px;
 }
 
+table#beersTab {
+    font-family: verdana;
+    margin-left: 25%;
+    width: 50%;
+    border: 2px solid black;
+    padding-left: 30px;
+    padding-right: 30px;
+    padding-top: 30px;
+    padding-bottom: 20px;
+}
+
 button.deleteButton {
     margin-left: 3px;
     height:50px;
@@ -78,6 +89,102 @@ button.modifyButton{
     background-position: center;
     border-radius: 10px;  
 }
+
+input.modifyBeerForm {
+    height: 40px; 
+    border-radius: 15px; 
+    width: 470px; 
+    font-size: 16px; 
+    margin-left: 30%; 
+    font-family: verdana; 
+    vertical-align: top;
+    margin-bottom: 10px;
+    margin-top: 10px;
+}
+
+span.modifyFormLabel {
+    font-size: 16px; 
+    margin-left: 30%; 
+    font-family: verdana; 
+    vertical-align:middle;
+}
+
+.InfoLabel{
+    font-size: 20px; 
+    margin-left: 10%; 
+    font-family: verdana; 
+    vertical-align:middle;
+}
+
+.InfoLabel2{
+    font-size: 14px; 
+    margin-left: 10%; 
+    font-family: verdana; 
+    vertical-align:middle;
+}
+
+span.addFormLabel {
+    font-size: 16px; 
+    margin-left: 5%;
+    font-family: verdana; 
+    vertical-align:middle;
+}
+
+.addBeerForm {
+    height: 40px; 
+    border-radius: 15px; 
+    margin-left: 30px;
+    width: 470px; 
+    font-size: 16px; 
+    font-family: verdana; 
+    vertical-align: top;
+    margin-bottom: 10px;
+    margin-top: 10px;
+}
+
+.addBeerSubmit{
+    margin-left: 30px; 
+    margin-top: 10px;
+    vertical-align: top; 
+    width: 480px; 
+    height: 60px; 
+    border-radius: 10px;  
+    background-image: url('https://static.thenounproject.com/png/1053562-200.png'); 
+    background-size:contain;
+    background-position: center;
+    background-repeat: no-repeat;
+    padding-right:30px;
+}
+
+.searchBeerSubmit{
+    margin-left: 15px; 
+    margin-top: 10px;
+    vertical-align: top; 
+    width: 49px; 
+    height: 49px; 
+    border-radius: 10px;  
+    background-image: url('https://cdn.discordapp.com/attachments/462774773391556640/788076660440039434/SCj5jP9ha4gLHfnGDXM23cTyVEDYgCJiZChLAVXQpZ1-TiZH6eaLboDmu-uDta8VMLAHiptdtSXx6CIFYirt8zMnYQ5vo4YHpuNj.png'); 
+    background-size:contain;
+    background-position: center;
+    background-repeat: no-repeat;
+    padding-right:30px;
+}
+
+
+input.modifyBeerSubmit {
+    margin-top: 20px;
+    margin-left: 30%; 
+    vertical-align: top; 
+    width: 480px;
+    height: 46px; 
+    border-radius: 10px;  
+    background-image: url('https://icon-library.com/images/check-mark-icon-png/check-mark-icon-png-25.jpg'); 
+    background-size:contain;
+    background-position: center;
+    background-repeat: no-repeat;
+    padding-right:30px;
+}
+
 th{
     font-size: 20px;
 }

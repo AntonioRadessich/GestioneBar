@@ -25,6 +25,8 @@
                             }
                         }
                     }
+                    var bglength=document.getElementById('listBackground');
+                    bglength.style.height = 150+data.length*52+"px";
                     var table=document.createElement("table");
                     table.setAttribute("id","beersTab");
                     //setta gli header nella tabella
@@ -43,9 +45,9 @@
                             cell.innerHTML=data[i][col[j]];
                         }
                         var cell2=tr.insertCell(-1);
-                        cell2.innerHTML="<button type='button' id='modify"+(i+1)+"' onclick='editBeer(this.id)'>Modify</button>";
+                        cell2.innerHTML="<button type='button' class='modifyButton' id='modify"+(i+1)+"' onclick='editBeer(this.id)'></button>";
                         var cell=tr.insertCell(-1);
-                        cell.innerHTML="<button type='button' id='delete"+(i+1)+"' onclick='deleteBeer(this.id)'>Delete</button>";
+                        cell.innerHTML="<button type='button' class='deleteButton' id='delete"+(i+1)+"' onclick='deleteBeer(this.id)'></button>";
                     }
                 var divContainer=document.getElementById('beersList');
                 divContainer.innerHTML="";
@@ -120,6 +122,8 @@
             function editBeer(id){
                 $(".toHide").show();
                 id=id.substr(6);
+                var bglength=document.getElementById('listBackground');
+                bglength.style.height = bglength.offsetHeight+900+"px";
                 $.getJSON("api/v1/birre/nome/"+document.getElementById('beersTab').rows[id].cells[1].innerHTML+"?token="+JSON.parse(localStorage.getItem("loggedUser")).token,function(data){
                     document.getElementById("modifyBeer").value = data[0].name;
                     document.getElementById("img").value = data[0].img;
@@ -138,6 +142,7 @@
                 id=id[id.length-1];
 
                 document.getElementById("beerID").innerHTML=id;
+                document.getElementById("beerID").style.display= "none";
                 //document.getElementById("modifyBeer").value=name;
             }
 
@@ -145,7 +150,8 @@
                 if(document.getElementById('modifyBeer')==""){
                    return false; 
                 }
-
+                var bglength=document.getElementById('listBackground');
+                bglength.style.height = bglength.offsetHeight-900+"px";
                 var newBeer={
                     "id": parseInt(document.getElementById('beerID').innerHTML),
                     "name": ""+document.getElementById('modifyBeer').value,
@@ -160,6 +166,7 @@
                         "colore": ""+document.getElementById('colore').value,
                     },
                     "ingredienti":""+document.getElementById('ingredienti').value,
+                    
                 };
 
                 $.ajax({
@@ -220,9 +227,17 @@
             });
             
             function searchBeer(){
+                var bglength=document.getElementById('insertDiv');
                 if(document.getElementById('beerName')==""){
                    return false; 
                 }
+                else{
+                    bglength.style.height = 650+"px";
+                    bglength.style.width = 600+"px";
+                    bglength.style.marginLeft = 20+"%";
+                }
+
+
                 $(".toHide").show();
                 var beer={
                     "name": ""+document.getElementById('beerName').value
@@ -247,10 +262,10 @@
         </script>
         
     </head>
-    <body style="background-image: none;">
+    <body>
         <div id="main">
-            <h4 id="welcome"></h4>
-            <div id="nav">
+            <h4 id="welcome" style="font-size: 36px; font-family:verdana; margin:20px; margin-left: 5px; color: white;"></h4>
+            <div id="nav" style="font-size: 20px; font-family:verdana;">
                 <ul>
                     <li><a id="home">Home</a></li>
                     <li class="dropdown">
@@ -266,7 +281,7 @@
                         <a id="ricNome">Ricerca per nome</a>
                         </div>
                     </li>
-                    <li><a id="logout" onclick="logout()">Log out</a></li>
+                    <li style="position: relative; float: right;"><a id="logout" style="padding-top: 9px; padding-bottom: 9px;" onclick="logout()"><img src="https://flaticons.net/icon.php?slug_category=mobile-application&slug_icon=logout" width="40px" height="40px"></a></li>
                 </ul>
             </div>
             <div class="main">

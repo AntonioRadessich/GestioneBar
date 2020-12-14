@@ -1,4 +1,12 @@
-<div class="modifyBeer">
+<div class="modifyBeer" style="margin-top: 20px;">
+    <div id="listBackground" style="
+    border-radius: 15px;
+    background:white;
+    padding-top: 50px;
+    width: 90%;
+    height: 350px;  
+    padding-left: 20px;
+    padding-right: 100px;">
     <div id="mainBody">
         <div id="beersList"></div>
     </div>
@@ -7,89 +15,100 @@
     <div class="toHide">
         <form id="modifyForm" onsubmit="sendEditedBeer(); return false;">
             <span id="beerID"></span>
-            <label for="modifyBeer">Nome:</label>
-            <input type="text" id='modifyBeer'><br>
-            <label for="img">Immagine:</label>
-            <input type="text" id='img'><br>
-            <label for="produttore">Produttore:</label>
-            <input type="text" id='produttore'><br>
-            <label for="distributore">Distributore:</label>
-            <input type="text" id='distributore'><br>
-            <label for="gradazioneAlcolica">Gradazione Alcolica:</label>
-            <input type="text" id='gradazioneAlcolica'><br>
-            <label for="tempoDiFermentazione">Tempo di fermentazione:</label>
-            <input type="text" id='tempoDiFermentazione'><br>
-            <label for="gusto">Gusto:</label>
-            <input type="text" id='gusto'><br>
-            <label for="calorie">Calorie:</label>
-            <input type="text" id='calorie'><br>
-            <label for="colore">Colore:</label>
-            <input type="text" id='colore'><br>
-            <label for="ingredienti">Ingredienti:</label>
-            <input type="text" id='ingredienti'><br>
-            <input type="submit" value="Modifica Birra">
+            <span class="modifyFormLabel"><b>Nome</b></span><br>
+            <input type="text" placeholder="Nome" class="modifyBeerForm" id='modifyBeer'><br>
+            <span class="modifyFormLabel"><b>Immagine</b></span><br>
+            <input type="text" placeholder="Immagine" class="modifyBeerForm" id='img'><br>
+            <span class="modifyFormLabel"><b>Produttore</b></span><br>
+            <input type="text" placeholder="Produttore" class="modifyBeerForm" id='produttore'><br>
+            <span class="modifyFormLabel"><b>Distributore</b></span><br>
+            <input type="text" placeholder="Distributore" class="modifyBeerForm" id='distributore'><br>
+            <span class="modifyFormLabel"><b>Gradazione Alcolica</b></span><br>
+            <input type="text" placeholder="Gradazione Alcolica" class="modifyBeerForm" id='gradazioneAlcolica'><br>
+            <span class="modifyFormLabel"><b>Tempo di Fermentazione</b></span><br>
+            <input type="text" placeholder="Tempo di Fermentazione" class="modifyBeerForm" id='tempoDiFermentazione'><br>
+            <span class="modifyFormLabel"><b>Gusto</b></span><br>
+            <input type="text" placeholder="Gusto" class="modifyBeerForm" id='gusto'><br>
+            <span class="modifyFormLabel"><b>Calorie</b></span><br>
+            <input type="text" placeholder="Calorie" class="modifyBeerForm"id='calorie'><br>
+            <span class="modifyFormLabel"><b>Colore</b></span><br>
+            <input type="text" placeholder="Colore" class="modifyBeerForm" id='colore'><br>
+            <span class="modifyFormLabel"><b>Ingredienti</b></span><br>
+            <input type="text" placeholder="Ingredienti" class="modifyBeerForm" id='ingredienti'><br>
+            <input type="submit" class="modifyBeerSubmit" value="">
         </form>
+    </div>
     </div>
     <br><br>
 </div>
 <div class="addBeer">
-    <div id="insertDiv">
-        <form id="insertForm" onsubmit="addNewBeer(); return false;">
-            <label for="newBeerName">Nome:</label>
-            <input type="text" id='newBeerName'><br>
-            <label for="newBeerName">Immagine:</label>
-            <input type="text" id='img'><br>
-            <label for="newBeerName">Produttore:</label>
-            <input type="text" id='produttore'><br>
-            <label for="newBeerName">Distributore:</label>
-            <input type="text" id='distributore'><br>
-            <label for="newBeerName">Gradazione Alcolica:</label>
-            <input type="text" id='gradazioneAlcolica'><br>
-            <label for="newBeerName">Tempo di fermentazione:</label>
-            <input type="text" id='tempoDiFermentazione'><br>
-            <label for="newBeerName">Gusto:</label>
-            <input type="text" id='gusto'><br>
-            <label for="newBeerName">Calorie:</label>
-            <input type="text" id='calorie'><br>
-            <label for="newBeerName">Colore:</label>
-            <input type="text" id='colore'><br>
-            <label for="newBeerName">Ingredienti:</label>
-            <input type="text" id='ingredienti'><br>
-            <input type="submit" value="Aggiungi Birra">
+    <div id="insertDiv"> 
+        <form id="insertForm" style="height: 46px;" onsubmit="addNewBeer(); return false;">
+            <div style="border-radius: 15px; background:white; padding-top: 50px; width: 460px; height: 980px; padding-left: 20px; margin-left: 25%; margin-top: 50px; padding-right: 100px;">
+                <span class="addFormLabel"><b>Nome</b></span><br>
+                <input type="text" class="addBeerForm" id='newBeerName'><br>
+                <span class="addFormLabel"><b>Immagine</b></span><br>
+                <input type="text" class="addBeerForm" id='img'><br>
+                <span class="addFormLabel"><b>Produttore</b></span><br>
+                <input type="text" class="addBeerForm" id='produttore'><br>
+                <span class="addFormLabel"><b>Distributore</b></span><br>
+                <input type="text" class="addBeerForm" id='distributore'><br>
+                <span class="addFormLabel"><b>Gradazione Alcolica</b></span><br>
+                <input type="text" class="addBeerForm" id='gradazioneAlcolica'><br>
+                <span class="addFormLabel"><b>Tempo di Fermentazione</b></span><br>
+                <input type="text" class="addBeerForm" id='tempoDiFermentazione'><br>
+                <span class="addFormLabel"><b>Gusto</b></span><br>
+                <input type="text" class="addBeerForm" id='gusto'><br>
+                <span class="addFormLabel"><b>Calorie</b></span><br>
+                <input type="text" class="addBeerForm" id='calorie'><br>
+                <span class="addFormLabel"><b>Colore</b></span><br>
+                <input type="text" class="addBeerForm" id='colore'><br>
+                <span class="addFormLabel"><b>Ingredienti</b></span><br>
+                <input type="text" class="addBeerForm" id='ingredienti'><br>
+                <input type="submit" class="addBeerSubmit" value="">
+            </div>
         </form>
     </div>
 </div>
 <div class="searchBeerByName">
-    <div id="beerInfo" class="toHide">
-        <label for="beerInfoName">Nome:</label>
-        <span id="beerInfoName"></span><br>
-        <label for="beerInfoImg">Immagine:</label><br>
-        <img id="beerInfoImg"><br>
-        <label for="produttore">Produttore:</label>
-        <span id="produttore"></span><br>
-        <label for="distributore">Distributore:</label>
-        <span id="distributore"></span><br>
-        <label for="gradazioneAlcolica">Gradazione Alcolica:</label>
-        <span id="gradazioneAlcolica"></span><br>
-        <label for="tempoDiFermentazione">Tempo Di Fermentazione:</label>
-        <span id="tempoDiFermentazione"></span><br>
-        <label for="gusto">Gusto:</label>
-        <span id="gusto"></span><br>
-        <label for="calorie">Calorie:</label>
-        <span id="calorie"></span><br>
-        <label for="colore">Colore:</label>
-        <span id="colore"></span><br>
-        <label for="ingredienti">Ingredienti:</label>
-        <span id="ingredienti"></span><br>
-    </div>
-    <div id="insertDiv">
-        <form id="insertForm" onsubmit="searchBeer(); return false;">
-            <input type="text" id='beerName' list="suggestions">
+    <div id="insertDiv" style="
+    border-radius: 15px;
+    background:white;
+    margin-top: 30px;
+    margin-left: 25%;
+    padding-top: 30px;
+    width: 500px;
+    height: 100px;  
+    padding-left: 20px;
+    padding-right: 100px;">
+        <form id="insertForm" style="width: 650px; vertical-align: center;" onsubmit="searchBeer(); return false;">
+            <span class="addFormLabel" style="margin-left: 18px; vertical-align: top;"><b>Ricerca Per Nome</b></span>
+            <input type="text" class="addBeerForm" style="margin-left: 15px;" id='beerName' list="suggestions">
             <datalist id="suggestions">
                 
             </datalist>
-            <input type="submit" value="Cerca Birra">
+            <input type="submit" class="searchBeerSubmit" value=" ">
         </form>
+        <div id="beerInfo" class="toHide">
+            <span class="modifyFormLabel" style="font-size: 35px; margin-left: 30px; margin-top: 20px;" id="beerInfoName"></span><br>
+            <img id="beerInfoImg" style="float: left;"><br>
+            <span class="InfoLabel"><b>Produttore: </b></span><br>
+            <span class="InfoLabel2"id="produttore"></span><br><br>
+            <span class="InfoLabel"><b>Distributore: </b></span><br>
+            <span class="InfoLabel2" id="distributore"></span><br><br>
+            <span class="InfoLabel"><b>Gradazione Alcolica: </b></span><br>
+            <span class="InfoLabel2" id="gradazioneAlcolica"></span><br><br>
+            <span class="InfoLabel"><b>Tempo di Fermentazione: </b></span><br>
+            <span class="InfoLabel2" id="tempoDiFermentazione"></span><br><br>
+            <span class="InfoLabel"><b>Gusto: </b></span><br>
+            <span class="InfoLabel2" id="gusto"></span><br><br>
+            <span class="InfoLabel"><b>Calorie: </b></span><br>
+            <span class="InfoLabel2" id="calorie"></span><br><br>
+            <span class="InfoLabel"><b>Colore: </b></span><br>
+            <span class="InfoLabel2" id="colore"></span><br><br>
+            <span class="InfoLabel"><b>Ingredienti: </b></span><br>
+            <span class="InfoLabel2" id="ingredienti"></span><br><br>
+        </div>
     </div>
 </div>
 
