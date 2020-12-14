@@ -521,12 +521,11 @@
             var ordini = [];
             function addMore(){
                 $("#orderTable").prop( "disabled", true );
-                var obj = { "beer":document.getElementById("orderBeer").value, 'quantity': parseInt(document.getElementById("orderQuantity").value)};
+                var obj = { "beer":document.getElementById("orderBeer").value, 'quantity': document.getElementById("orderQuantity").value};
                 ordini.push(obj);
                 $("#orderMore").show();
             }
             function makeOrder(){
-                $("#orderTable").prop( "disabled", false );
                 var obj = { "user":getUser(), "listOfOrders":ordini, "table": document.getElementById("orderTable").value}
                 $.ajax({
                    url: 'api/v1/ordinazioni',
@@ -540,6 +539,12 @@
                        getOrders();
                    }
                 });
+                $("#orderMore").hide();
+                ordini = [];
+                $("#orderTable").prop( "disabled", false );
+                $("#orderBeer").val("");
+                $("#orderTable").val("");
+                $("#orderImg").attr("src","");
             }
         </script>
         
