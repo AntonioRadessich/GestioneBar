@@ -75,15 +75,247 @@
                 return false;
             }
 
+            function getOrders(){
+                $.getJSON("api/v1/ordinazioni?token="+JSON.parse(localStorage.getItem("loggedUser")).token,function(data){
+                    var col=[];
+                    for(var i=0;i<data.length;i++){
+                        for(var j in data[i]){
+                            if(col.indexOf(j)===-1){
+                                col.push(j);
+                            }
+                        }
+                    }
+                    
+                    var table=document.createElement("table");
+                    table.setAttribute("id","ordersTab");
+                    //setta gli header nella tabella
+                    var tr=table.insertRow(-1);
+                    for(var i=0;i<col.length;i++){
+                        var th=document.createElement("th");
+                        th.innerHTML=col[i];
+                        tr.appendChild(th);
+                    }
+
+                    //scive i dati nella tabella
+                    for(var i=0;i<data.length;i++){
+                        tr=table.insertRow(-1);
+                        for(var j=0;j<col.length;j++){
+                            var cell=tr.insertCell(-1);
+                            if(j==2){
+                                var str="";
+                                for(var k in data[i][col[j]]){
+                                    str=str+data[i][col[j]][k]["beer"];
+                                    str=str+": "+data[i][col[j]][k]["quantity"];
+                                    str=str+"<br>";
+                                }
+                                cell.innerHTML=str;
+                            }
+                            else{
+                                cell.innerHTML=data[i][col[j]];
+                            }
+                        }
+                         
+                        var cell2=tr.insertCell(-1);
+                        cell2.innerHTML="<button type='button' id='modifyOrder"+(i+1)+"' onclick='modifyOrder(this.id)'>Modify</button>";
+                    }
+                var divContainer=document.getElementById('ordersList');
+                divContainer.innerHTML="";
+                divContainer.appendChild(table);
+                });
+            }
+
+            var numeroDiOrdini;
+
+            function modifyOrder(id){
+                $(".toHide").show();
+
+                id=id.substr(11);
+                var tabId=id;
+                id=document.getElementById('ordersTab').rows[id].cells[0].innerHTML;
+                id=id.split("/");
+                id=id[id.length-1];
+
+                var listOfOrders=[];
+                var all=document.getElementById('ordersTab').rows[tabId].cells[2].innerHTML;
+                all=all.split('<br>');
+                for(var i=0;i<all.length-1;i++){
+                    var splitted=all[i].split(': ');
+                    var obj={
+                        "beer":""+splitted[0],
+                        "quantity":""+splitted[1]
+                    }
+                    listOfOrders.push(obj);
+                }
+                
+                document.getElementById('laMiaMorte').innerHTML="";
+                for(var i=0;i<listOfOrders.length;i++){
+                    $("#laMiaMorte").append(
+                        "<label for='modifyBeer"+i+"' class='list"+i+"'>Beer:</label>"+
+                        "<input type='text' value='"+listOfOrders[i].beer+"' id='modifyBeer"+i+"' class='list"+i+"'><br>"+
+                        "<label for='modifyQuantity"+i+"' class='list"+i+"'>Quantity:</label>"+
+                        "<input type='number' step='0.1' value='"+listOfOrders[i].quantity+"' id='modifyQuantity"+i+"' class='list"+i+"'><br>"+
+                        "<button type='button' id='deleteFromList"+i+"' onclick='deleteFromList(this.id); return false;' class='list"+i+"'>Delete This</button>"+
+                        "<br class='list"+i+"'><br class='list"+i+"'>"
+                    );
+                
+                }
+                $("#laMiaMorte").append(
+                    "<button type='button' id='addToList' onclick='addingToList(); return false;'>Add</button><br><br>"
+                );
+                document.getElementById('orderID').innerText=""+document.getElementById('ordersTab').rows[tabId].cells[0].innerHTML;
+                document.getElementById('modifyUser').value=""+document.getElementById('ordersTab').rows[tabId].cells[1].innerHTML;
+                document.getElementById('modifyTable').value=""+document.getElementById('ordersTab').rows[tabId].cells[3].innerHTML;
+                numeroDiOrdini=listOfOrders.length;
+            }
+
+            function deleteFromList(id){
+                numeroDiOrdini--;
+                id=id.substr(14);
+                $(".list"+id).remove();
+            }
+
+            function addingToList(){
+                $("<label for='modifyBeer"+numeroDiOrdini+"' class='list"+numeroDiOrdini+"'>Beer:</label>"+
+                    "<input type='text' id='modifyBeer"+numeroDiOrdini+"' class='list"+numeroDiOrdini+"'><br>"+
+                    "<label for='modifyQuantity"+numeroDiOrdini+"' class='list"+numeroDiOrdini+"'>Quantity:</label>"+
+                    "<input type='number' step='0.1' id='modifyQuantity"+numeroDiOrdini+"' class='list"+numeroDiOrdini+"'><br>"+
+                    "<button type='button' id='deleteFromList"+numeroDiOrdini+"' onclick='deleteFromList(this.id); return false;' class='list"+numeroDiOrdini+"'>Delete This</button>"+
+                    "<br class='list"+numeroDiOrdini+"'><br class='list"+numeroDiOrdini+"'>")
+                .insertBefore("#addToList");
+                numeroDiOrdini++;
+            }
+
+            function sendModifyOrder(){
+                var listOfOrders=[];
+                for(var i=0;i<numeroDiOrdini;i++){
+                    var obj={
+                        "beer":""+document.getElementById('modifyBeer'+i).value,
+                        "quantity":""+document.getElementById('modifyQuantity'+i).value
+                    }
+                    listOfOrders.push(obj);
+                }
+
+                var preparedJSON={
+                    "id":""+document.getElementById('orderID').innerText,
+                    "user":""+document.getElementById('modifyUser').value,
+                    "listOfOrders":listOfOrders,
+                    "table":""+document.getElementById('modifyTable').value
+                }
+
+                $.ajax({
+                    url: 'api/v1/ordinazioni',
+                    type: 'PUT',
+                    data: JSON.stringify(preparedJSON),
+                    headers: {
+                        'Content-Type':'application/json',
+                        'x-access-token':JSON.parse(localStorage.getItem("loggedUser")).token
+                    },
+                    success: function(result){
+                        getOrders();
+                    }
+                }); 
+
+                $(".toHide").hide();
+            }
+
+            var ordini = [];
+            function addMore(){
+                $("#orderTable").prop( "disabled", true );
+                var obj = { "beer":document.getElementById("orderBeer").value, 'quantity': document.getElementById("orderQuantity").value};
+                ordini.push(obj);
+                $("#orderMore").show();
+            }
+            function makeOrder(){
+                var obj = { "user":getUser(), "listOfOrders":ordini, "table": document.getElementById("orderTable").value}
+                $.ajax({
+                   url: 'api/v1/ordinazioni',
+                   type: 'POST',
+                   data: JSON.stringify(obj),
+                   headers: {
+                       "Content-Type":"application/json",
+                       "x-access-token":JSON.parse(localStorage.getItem("loggedUser")).token
+                   },
+                   success: function(result){
+                       getOrders();
+                   }
+                });
+                $("#orderMore").hide();
+                ordini = [];
+                $("#orderTable").prop( "disabled", false );
+                $("#orderBeer").val("");
+                $("#orderTable").val("");
+                $("#orderImg").attr("src","");
+            }
+
             $( document ).ready( function() {
                 var cat=JSON.parse(localStorage.getItem("loggedUser")).category;
                 if(cat==null||cat!='cameriere'){
                     window.location.replace("/",true);
                 }
 
+                $( ".main" ).load( "baristaLoad.html .homeDiv",function(){
+                    $( ".toHide").hide();
+                    $("#orderMore").hide();
+                    $("#orderBeer").on("input", function(){
+                        var textContent = this.value;
+                        if(textContent==""||textContent==null){
+                            $.getJSON("api/v1/birre"+"?token="+JSON.parse(localStorage.getItem("loggedUser")).token,function(data){
+                                $("#suggestions").empty();
+                                for(var i=0;i<data.length;i++){ 
+                                    $("#suggestions").append("<option value='"+ data[i].name +"''></option>")
+                                }
+                            });
+                        }
+                        else{
+                            $.getJSON("api/v1/birre/nome/closestMatch/"+textContent+"?token="+JSON.parse(localStorage.getItem("loggedUser")).token,function(data){
+                                $("#suggestions").empty();
+                                for(var i=0;i<data.length;i++){ 
+                                    if(textContent==data[i].name){
+                                        $("#orderImg").attr("src",data[i].img);
+                                    }else{
+                                        $("#orderImg").attr("src","");
+                                    }
+                                    $("#suggestions").append("<option value='"+ data[i].name +"''></option>")
+                                }
+                            });
+                        }
+                    });
+                });
+                getOrders();
+
                 $("#home").click( function(){
                     $( ".main" ).html(" ");
-                } );
+                    $( ".main" ).load( "baristaLoad.html .homeDiv",function(){
+                        $( ".toHide").hide();
+                        $("#orderMore").hide();
+                        $("#orderBeer").on("input", function(){
+                            var textContent = this.value;
+                            if(textContent==""||textContent==null){
+                                $.getJSON("api/v1/birre"+"?token="+JSON.parse(localStorage.getItem("loggedUser")).token,function(data){
+                                    $("#suggestions").empty();
+                                    for(var i=0;i<data.length;i++){ 
+                                        $("#suggestions").append("<option value='"+ data[i].name +"''></option>")
+                                    }
+                                });
+                            }
+                            else{
+                                $.getJSON("api/v1/birre/nome/closestMatch/"+textContent+"?token="+JSON.parse(localStorage.getItem("loggedUser")).token,function(data){
+                                    $("#suggestions").empty();
+                                    for(var i=0;i<data.length;i++){ 
+                                        if(textContent==data[i].name){
+                                            $("#orderImg").attr("src",data[i].img);
+                                        }else{
+                                            $("#orderImg").attr("src","");
+                                        }
+                                        $("#suggestions").append("<option value='"+ data[i].name +"''></option>")
+                                    }
+                                });
+                            }
+                        });
+                    });
+                    getOrders();
+                });
+
                 $("#modBirre").click( function(){
                     $( ".main" ).html(" ");
                     $( ".main" ).load( "baristaLoad.html .modifyBeer", function(){
