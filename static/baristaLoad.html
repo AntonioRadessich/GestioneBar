@@ -112,3 +112,47 @@
     </div>
 </div>
 
+<div class="homeDiv" style="height: auto; overflow: hidden"> 
+    <div class="mainOrdersList"style="width:50%; float:left; position: absolute;">
+        <div id="ordersList"></div>
+
+        <div id="orders" class="toHide">
+            <br><br>
+            <form id="modifyForm" onsubmit="sendModifyOrder(); return false;">
+                <span id="orderID"></span><br><br>
+                <label for="modifyUser">User:</label>
+                <input type="text" id='modifyUser'><br><br>
+                <div id="laMiaMorte"></div>
+                <label for="modifyTable">Table:</label>
+                <input type="text" id='modifyTable'><br><br>
+                <input type="submit" value="Modifica Ordine">
+            </form>
+        </div>
+    </div>
+
+    <div class="mainMakeOrder" style="width:50%; margin-left: 50%;" >
+        <div id="orderDiv">
+            <br><br>
+            <form id="orderForm" onsubmit="addMore(); return false;">
+                <label for="orderBeer">Beer:</label>
+                <input type="text" id='orderBeer' list="suggestions">
+                <datalist id="suggestions">
+                    
+                </datalist><br><br>
+                <img id="orderImg"><br><br>
+                <label for="orderTable">Table numer:</label> 
+                <input type="number" id='orderTable'><br> <br>
+                <select id="orderQuantity">
+                    <option value="0,2" selected>0.2 l</option>
+                    <option value="0,33">0.33 l</option>
+                    <option value="0,5">0.5 l</option>
+                    <option value="1">1 l</option>
+                </select> 
+                <input type="submit" id='orderSubmit'>
+            </form> 
+            <form id="orderMore" onsubmit="makeOrder(); return false;">
+                <input type="submit" value="Concludi l'ordinazione">
+            </form>
+        </div>
+    </div>  
+</div>
