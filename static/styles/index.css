@@ -116,6 +116,11 @@ span.modifyFormLabel {
     vertical-align:middle;
 }
 
+img{
+    max-width:300px;
+    max-height:300px;
+}
+
 .InfoLabel2{
     font-size: 14px; 
     margin-left: 10%; 
