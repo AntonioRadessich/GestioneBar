@@ -121,6 +121,191 @@ img{
     max-height:300px;
 }
 
+.modifyOrderButton{
+    margin-left: 5px;
+    border-radius: 10px;  
+    height:50px;
+    width:50px;
+    margin-top: 18px;
+    background-image: url(https://image.flaticon.com/icons/png/512/84/84380.png);
+    background-size: 80%;
+    background-repeat: no-repeat;
+    background-position: center; 
+}
+
+
+.orderFinButton{
+    margin-left: 5px;
+    border-radius: 10px;  
+    height:50px;
+    width:50px;
+    margin-top: 18px;
+    background-image: url(https://cdn.discordapp.com/attachments/764828983971676200/788425512971665458/confirm.png);
+    background-size: 80%;
+    background-repeat: no-repeat;
+    background-position: center; 
+}
+.orderModButton{
+    margin-left: 5px;
+    border-radius: 10px;  
+    height:50px;
+    width:50px;
+    margin-top: 18px;
+    background-image: url(https://image.flaticon.com/icons/png/512/84/84380.png);
+    background-size: 80%;
+    background-repeat: no-repeat;
+    background-position: center; 
+}
+.orderDelButton{
+    margin-left: 5px;
+    border-radius: 10px;  
+    height:50px;
+    width:50px;
+    padding-left: 5px;
+    margin-top: 18px;
+    background-image: url(https://cdn.discordapp.com/attachments/764828983971676200/788425517560627211/delete.png);
+    background-size: 80%;
+    background-repeat: no-repeat;
+    background-position: center; 
+}
+
+div#backgroundList {
+    background-color: white;
+    margin-top: 30px;
+    padding-top: 20px;
+    margin-left: 60px;
+    font-size: 18px;
+    width: 630px;
+    font-family: verdana;
+    border-radius: 15px;
+}
+
+div#ordersList {
+    margin-top: 20px;
+    margin-left: 20px;
+    padding-bottom: 30px;
+}
+
+form#orderForm{
+    margin-left: 50px;
+}
+
+.modOrderInput{
+    height: 40px; 
+    border-radius: 15px; 
+    font-size: 16px; 
+    width: 220px;
+    font-family: verdana; 
+    vertical-align: top;
+    margin-left: 40px;
+}
+.modOrderInput2{
+    height: 40px; 
+    border-radius: 15px; 
+    font-size: 16px; 
+    width: 220px;
+    font-family: verdana; 
+    vertical-align: top;
+    margin-left: 75px;
+}
+
+.addBeerOrderButton{
+    border-radius: 10px;  
+    height:50px;
+    width: 450px;
+    background-image: url(https://cdn.onlinewebfonts.com/svg/img_45824.png);
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center; 
+}
+
+.modOrderSubmit{
+    border-radius: 10px;  
+    margin-bottom: 30px;
+    height:50px;
+    width: 450px;
+    background-image: url(https://cdn.discordapp.com/attachments/764828983971676200/788425512971665458/confirm.png);
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center; 
+}
+
+.deleteBeerOrderButton{
+    border-radius: 10px;  
+    height:50px;
+    width:50px;
+    background-image: url(https://cdn.discordapp.com/attachments/764828983971676200/788425517560627211/delete.png);
+    background-size: 80%;
+    background-repeat: no-repeat;
+    background-position: center; 
+}
+
+form#modifyForm{
+    margin-left: 50px;
+}
+
+img#orderImg{
+    float: right;
+    top:20%;
+    margin-right: 40px;
+    max-width: 90px;
+    max-height: 200px;
+    vertical-align: top;
+}
+
+input#orderBeer{
+    height: 40px; 
+    border-radius: 15px; 
+    font-size: 16px; 
+    width: 220px;
+    font-family: verdana; 
+    vertical-align: top;
+    margin-left: 12px;
+}
+
+input#orderTable{
+    height: 40px; 
+    border-radius: 15px; 
+    font-size: 16px; 
+    width: 220px;
+    font-family: verdana; 
+    vertical-align: top;
+}
+
+select#orderQuantity{
+    margin-top: 20px;
+    margin-left: 70px;
+    height: 46px; 
+    border-radius: 15px; 
+    width: 110px; 
+    vertical-align: top; 
+    font-size: 16px;
+    font-family: verdana;
+}
+
+input#orderSubmit{
+    margin-left: 5px;
+    border-radius: 10px;  
+    height:50px;
+    width:50px;
+    margin-top: 18px;
+    background-image: url(https://image.flaticon.com/icons/png/512/84/84380.png);
+    background-size: 80%;
+    background-repeat: no-repeat;
+    background-position: center; 
+}
+
+div#orderDiv {
+    background-color: white;
+    margin-left: 45px;
+    margin-top: 30px;
+    font-size: 18px;
+    font-family: verdana;
+    width: 500px;
+    height:350px;
+    border-radius: 15px;
+}
+
 .InfoLabel2{
     font-size: 14px; 
     margin-left: 10%; 
@@ -159,6 +344,17 @@ span.addFormLabel {
     background-position: center;
     background-repeat: no-repeat;
     padding-right:30px;
+}
+
+.addOrderSubmit{
+    margin-left: 90px; 
+    margin-top: 10px;
+    vertical-align: top; 
+    width: 300px; 
+    height: 50px; 
+    border-radius: 10px;
+    font-family: verdana;
+    font-size: 20px;
 }
 
 .searchBeerSubmit{

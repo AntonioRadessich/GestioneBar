@@ -114,19 +114,25 @@
 
 <div class="homeDiv" style="height: auto; overflow: hidden"> 
     <div class="mainOrdersList"style="width:50%; float:left; position: absolute;">
-        <div id="ordersList"></div>
-
-        <div id="orders" class="toHide">
-            <br><br>
-            <form id="modifyForm" onsubmit="sendModifyOrder(); return false;">
-                <span id="orderID"></span><br><br>
-                <label for="modifyUser">User:</label>
-                <input type="text" id='modifyUser'><br><br>
-                <div id="laMiaMorte"></div>
-                <label for="modifyTable">Table:</label>
-                <input type="text" id='modifyTable'><br><br>
-                <input type="submit" value="Modifica Ordine">
-            </form>
+        
+        <div id="backgroundList">
+            <p style="margin-left: 40px; margin-top: 20px; font-size: 24px;"><b>Lista di Ordini</b></p>
+            <span style="margin-left: 90px; padding-top: 30px; font-size: 16px;"><b>Utente</b></span>
+            <span style="margin-left: 70px; padding-top: 30px; font-size: 16px;"><b>Ordine</b></span>
+            <span style="margin-left: 50px; padding-top: 30px; font-size: 16px;"><b>Tavolo</b></span>
+            <div id="ordersList"></div>
+            <div id="orders" class="toHide">
+                <br><br>
+                <form id="modifyForm" onsubmit="sendModifyOrder(); return false;">
+                    <span style="display: none;" id="orderID"></span><br><br>
+                    <label for="modifyUser">Utente:</label>
+                    <input class="modOrderInput2" style="margin-left:51px;" type="text" id='modifyUser'><br><br>
+                    <div id="laMiaMorte"></div>
+                    <label for="modifyTable">Tavolo:</label>
+                    <input class="modOrderInput2" style="margin-left:54px;" type="text" id='modifyTable'><br><br>
+                    <input type="submit" class="modOrderSubmit" value="">
+                </form>
+            </div>
         </div>
     </div>
 
@@ -134,24 +140,28 @@
         <div id="orderDiv">
             <br><br>
             <form id="orderForm" onsubmit="addMore(); return false;">
-                <label for="orderBeer">Beer:</label>
-                <input type="text" id='orderBeer' list="suggestions">
-                <datalist id="suggestions">
-                    
-                </datalist><br><br>
-                <img id="orderImg"><br><br>
-                <label for="orderTable">Table numer:</label> 
-                <input type="number" id='orderTable'><br> <br>
+                <img id="orderImg"><br>
+                <div style="height: 46px;">
+                    <span style="height: 46px; vertical-align: middle;">Birra:</span>
+                    <input type="text" id='orderBeer' list="suggestions">
+                    <datalist id="suggestions">   
+                    </datalist><br>
+                </div>
+                <div style="margin-top: 20px; height: 46px;">
+                    <span style="height: 50px; vertical-align: middle;">Tavolo:</span>
+                    <input type="number" id='orderTable'> 
+                </div>
+                
                 <select id="orderQuantity">
                     <option value="0,2" selected>0.2 l</option>
                     <option value="0,33">0.33 l</option>
                     <option value="0,5">0.5 l</option>
                     <option value="1">1 l</option>
                 </select> 
-                <input type="submit" id='orderSubmit'>
+                <input type="submit" id='orderSubmit' value="">
             </form> 
             <form id="orderMore" onsubmit="makeOrder(); return false;">
-                <input type="submit" value="Concludi l'ordinazione">
+                <input type="submit" class="addOrderSubmit" value="Completa l'Ordinazione">
             </form>
         </div>
     </div>  
